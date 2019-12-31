@@ -21,9 +21,9 @@
 
 volatile uint8_t timer0Counter = 0;
 
-uint16_t dummyData[4] = {2000, 5000, 6000, 8000};
+// uint16_t dummyData[4] = {2000, 5000, 6000, 8000};
 
-uint16_t cmpValue[5] = {0};
+// uint16_t cmpValue[5] = {0};
 
 void SYS_Init(void)
 {
@@ -157,19 +157,19 @@ void keusZeroCrossInit(void)
   TIMER_Start(TIMER0);
 }
 
-uint16_t calculateCmpValue(uint16_t timingMicroSec)
-{
-  return (1.5 * timingMicroSec);
-}
+// uint16_t calculateCmpValue(uint16_t timingMicroSec)
+// {
+//   return (1.5 * timingMicroSec);
+// }
 
-void fillCmpValue(void)
-{
-  cmpValue[0] = calculateCmpValue(dummyData[0]);
-  cmpValue[1] = calculateCmpValue(dummyData[1]);
-  cmpValue[2] = calculateCmpValue(dummyData[2]);
-  cmpValue[3] = calculateCmpValue(dummyData[3]);
-  cmpValue[4] = calculateCmpValue(9600);
-}
+// void fillCmpValue(void)
+// {
+//   cmpValue[0] = calculateCmpValue(dummyData[0]);
+//   cmpValue[1] = calculateCmpValue(dummyData[1]);
+//   cmpValue[2] = calculateCmpValue(dummyData[2]);
+//   cmpValue[3] = calculateCmpValue(dummyData[3]);
+//   cmpValue[4] = calculateCmpValue(9600);
+// }
 
 int main(void)
 {
@@ -181,20 +181,20 @@ int main(void)
   to unlock protected register if necessary */
   SYS_Init();
 
-  SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
-  SYS->P2_MFP |= SYS_MFP_P22_GPIO;
-  GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
-  P22 = LED_LOW;
+  // SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
+  // SYS->P2_MFP |= SYS_MFP_P22_GPIO;
+  // GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
+  // P22 = LED_LOW;
 
-  SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
-  SYS->P2_MFP |= SYS_MFP_P24_GPIO;
-  GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
-  P24 = LED_LOW;
+  // SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
+  // SYS->P2_MFP |= SYS_MFP_P24_GPIO;
+  // GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
+  // P24 = LED_LOW;
 
-  SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
-  SYS->P2_MFP |= SYS_MFP_P25_GPIO;
-  GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
-  P25 = LED_LOW;
+  // SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
+  // SYS->P2_MFP |= SYS_MFP_P25_GPIO;
+  // GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
+  // P25 = LED_LOW;
 
   SYS->P2_MFP &= ~SYS_MFP_P23_Msk;
   SYS->P2_MFP |= SYS_MFP_P23_GPIO;
@@ -203,7 +203,7 @@ int main(void)
 
   keusZeroCrossInit();
 
-  fillCmpValue();
+  // fillCmpValue();
 
   while (1)
   {

@@ -70808,34 +70808,6 @@
     "scope": null
   },
   {
-    "ID": "c:@dummyData",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "dummyData",
-    "location": {
-      "column": "10",
-      "line": "24",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\Timer_0_ZeroCross\\main.c"
-    },
-    "name": "dummyData",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@cmpValue",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "cmpValue",
-    "location": {
-      "column": "10",
-      "line": "26",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\Timer_0_ZeroCross\\main.c"
-    },
-    "name": "cmpValue",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
     "ID": "c:@F@SYS_Init",
     "What": "Function",
     "defdec": "Def",
@@ -70874,34 +70846,6 @@
       "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\Timer_0_ZeroCross\\main.c"
     },
     "name": "keusZeroCrossInit",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@calculateCmpValue",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "uint16_t calculateCmpValue(uint16_t)",
-    "location": {
-      "column": "10",
-      "line": "160",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\Timer_0_ZeroCross\\main.c"
-    },
-    "name": "calculateCmpValue",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@fillCmpValue",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void fillCmpValue(void)",
-    "location": {
-      "column": "6",
-      "line": "165",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\Timer_0_ZeroCross\\main.c"
-    },
-    "name": "fillCmpValue",
     "origin": "project_file",
     "scope": null
   },

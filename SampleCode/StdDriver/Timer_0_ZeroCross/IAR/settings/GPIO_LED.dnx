@@ -12,7 +12,7 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <DebugChecksum>
-        <Checksum>1915400852</Checksum>
+        <Checksum>1129091960</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -24,12 +24,6 @@
     <Disassembly>
         <MixedMode>1</MixedMode>
     </Disassembly>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints>
-        <Count>0</Count>
-    </Breakpoints>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -39,6 +33,12 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints>
+        <Count>0</Count>
+    </Breakpoints>
     <Aliases>
         <A0>_ "Z:\Mini58 Resources\Mini58_Series_BSP_CMSIS_v3.01.000\Library\Device\Nuvoton\MINI58SERIES\Source\system_Mini58Series.c" "D:\VB_Shared\Mini58 Resources\Mini58 development\Library\Device\Nuvoton\Mini58Series\Source\system_Mini58Series.c"</A0>
         <Count>1</Count>
