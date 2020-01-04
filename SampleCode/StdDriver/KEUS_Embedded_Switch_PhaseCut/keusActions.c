@@ -41,7 +41,7 @@ void toggleLed(uint8_t ledno)
         if (arr_led[0].phaseCutTime)
         {
             //clear phasecut enable bit
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED1;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED1;
             arr_led[0].phaseCutTime = 0;
             //Update timing array and sort it
             updateAllTimings();
@@ -63,7 +63,7 @@ void toggleLed(uint8_t ledno)
         }
         if (arr_led[1].phaseCutTime)
         {
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED2;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED2;
             arr_led[1].phaseCutTime = 0;
             updateAllTimings();
         }
@@ -84,7 +84,7 @@ void toggleLed(uint8_t ledno)
         }
         if (arr_led[2].phaseCutTime)
         {
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED3;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED3;
             arr_led[2].phaseCutTime = 0;
             updateAllTimings();
         }
@@ -105,7 +105,7 @@ void toggleLed(uint8_t ledno)
         }
         if (arr_led[3].phaseCutTime)
         {
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED4;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED4;
             arr_led[3].phaseCutTime = 0;
             updateAllTimings();
         }
@@ -146,7 +146,7 @@ void executeSwitchState(void)
         {
         case LEDID1:
             //Clear phasecut enable bit
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED1;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED1;
             if (arr_led[0].config == CONFIGNORMAL)
             {
                 if (state > 0)
@@ -181,7 +181,7 @@ void executeSwitchState(void)
                 {
                     //phaseCutEnable |= (1 << (LEDID1 - 1));
                     //Set phasecut bit mask
-                    phaseCutEnable |= PC_ENABLE_FOR_LED1;
+                    smoothDimActive |= SM_ENABLE_FOR_LED1;
                     setPhaseCut(LEDID1, state);
                 }
                 arr_led[0].state = state;
@@ -191,8 +191,7 @@ void executeSwitchState(void)
 
             break;
         case LEDID2:
-
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED2;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED2;
             if (arr_led[1].config == CONFIGNORMAL)
             {
                 if (state > 0)
@@ -226,7 +225,7 @@ void executeSwitchState(void)
                 else
                 {
                     //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    phaseCutEnable |= PC_ENABLE_FOR_LED2;
+                    smoothDimActive |= SM_ENABLE_FOR_LED2;
                     setPhaseCut(LEDID2, state);
                 }
                 arr_led[1].state = state;
@@ -235,7 +234,7 @@ void executeSwitchState(void)
 
             break;
         case LEDID3:
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED3;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED3;
             if (arr_led[2].config == CONFIGNORMAL)
             {
                 if (state > 0)
@@ -268,7 +267,7 @@ void executeSwitchState(void)
                 else
                 {
                     //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    phaseCutEnable |= PC_ENABLE_FOR_LED3;
+                    smoothDimActive |= SM_ENABLE_FOR_LED3;
                     setPhaseCut(LEDID3, state);
                 }
                 arr_led[2].state = state;
@@ -277,7 +276,7 @@ void executeSwitchState(void)
 
             break;
         case LEDID4:
-            phaseCutEnable &= ~PC_ENABLE_FOR_LED4;
+            smoothDimActive &= ~SM_ENABLE_FOR_LED4;
             if (arr_led[3].config == 1)
             {
                 if (state > 0)
@@ -310,7 +309,7 @@ void executeSwitchState(void)
                 else
                 {
                     //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    phaseCutEnable |= PC_ENABLE_FOR_LED4;
+                    smoothDimActive |= SM_ENABLE_FOR_LED4;
                     setPhaseCut(LEDID4, state);
                 }
                 arr_led[3].state = state;
@@ -483,7 +482,7 @@ void configSwitch(void)
         case LEDID1:
             if (arr_led[0].phaseCutTime && config == 1)
             {
-                phaseCutEnable &= ~PC_ENABLE_FOR_LED1;
+                smoothDimActive &= ~SM_ENABLE_FOR_LED1;
                 arr_led[0].phaseCutTime = 0;
                 updateAllTimings();
                 LED1 = LED_LOW;
@@ -494,7 +493,7 @@ void configSwitch(void)
         case LEDID2:
             if (arr_led[1].phaseCutTime && config == 1)
             {
-                phaseCutEnable &= ~PC_ENABLE_FOR_LED2;
+                smoothDimActive &= ~SM_ENABLE_FOR_LED2;
                 arr_led[1].phaseCutTime = 0;
                 updateAllTimings();
                 LED2 = LED_LOW;
@@ -505,7 +504,7 @@ void configSwitch(void)
         case LEDID3:
             if (arr_led[2].phaseCutTime && config == 1)
             {
-                phaseCutEnable &= ~PC_ENABLE_FOR_LED3;
+                smoothDimActive &= ~SM_ENABLE_FOR_LED3;
                 arr_led[2].phaseCutTime = 0;
                 updateAllTimings();
                 LED3 = LED_LOW;
@@ -516,7 +515,7 @@ void configSwitch(void)
         case LEDID4:
             if (arr_led[3].phaseCutTime && config == 1)
             {
-                phaseCutEnable &= ~PC_ENABLE_FOR_LED4;
+                smoothDimActive &= ~SM_ENABLE_FOR_LED4;
                 arr_led[3].phaseCutTime = 0;
                 updateAllTimings();
                 LED4 = LED_LOW;

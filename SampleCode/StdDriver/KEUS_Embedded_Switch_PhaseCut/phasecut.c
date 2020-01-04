@@ -42,17 +42,18 @@ void sortTimings(void)
 
 uint16_t calculateCmpValue(uint8_t dim_level)
 {
-    uint16_t cmpValue = 15000 - ((dim_level * 15000)/255);
+    //uint16_t cmpValue = 15000 - ((dim_level * 15000) / 255);
+    uint16_t cmpValue = (255 - dim_level) * SM_LEVEL;
 
-    if (cmpValue < MIN_ALLOWED_CMPVALUE)
-    {
-        cmpValue = MIN_ALLOWED_CMPVALUE;
-    }
+    // if (cmpValue < MIN_ALLOWED_CMPVALUE)
+    // {
+    //     cmpValue = MIN_ALLOWED_CMPVALUE;
+    // }
 
-    else if (cmpValue > MAX_ALLOWED_CMPVALUE)
-    {
-        cmpValue = MAX_ALLOWED_CMPVALUE;
-    }
+    // else if (cmpValue > MAX_ALLOWED_CMPVALUE)
+    // {
+    //     cmpValue = MAX_ALLOWED_CMPVALUE;
+    // }
     return cmpValue;
 }
 
@@ -61,7 +62,8 @@ void updateAllTimings(void)
 {
     for (int i = 0; i < MAX_NUMBER_LED; i++)
     {
-        allSwitchTiming[i] = arr_led[i].phaseCutTime;
+        //allSwitchTiming[i] = arr_led[i].phaseCutTime;
+        allSwitchTiming[i] = arr_led[i].smoothDimTime;
     }
     sortTimings();
 }
@@ -79,7 +81,7 @@ void setPhaseCut(uint8_t ledno, uint8_t state)
     // state = 255 - state;
     // arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 10000));
     arr_led[ledno - 1].phaseCutTime = calculateCmpValue(state);
-    updateAllTimings(); //fill allSwitchTiming and sort it
+    //updateAllTimings(); //fill allSwitchTiming and sort it
 }
 
 void phaseCutInit(void)
@@ -89,8 +91,8 @@ void phaseCutInit(void)
     SwitchTimingIndex = MAX_NUMBER_LED;
     TIMER_EnableInt(TIMER1);
     NVIC_EnableIRQ(TMR1_IRQn);
-    allSwitchTiming[MAX_NUMBER_LED] = PHASE_CUT_RESET;     //9.6ms
-    allSwitchTiming[MAX_NUMBER_LED + 1] = 15000; //10ms
+    allSwitchTiming[MAX_NUMBER_LED] = PHASE_CUT_RESET; //9.6ms
+    allSwitchTiming[MAX_NUMBER_LED + 1] = 15000;       //10ms
     TIMER_Start(TIMER1);
 }
 
@@ -143,25 +145,27 @@ void TMR1_IRQHandler(void)
     // clear timer interrupt flag
     TIMER_ClearIntFlag(TIMER1);
 
-    if (SwitchTimingIndex == 4)
+    if (SwitchTimingIndex == MAX_NUMBER_LED)
     {
-        if (phaseCutEnable & PC_ENABLE_FOR_LED1)
+        if (arr_led[0].phaseCutTime)
         {
             LED1 = LED_LOW;
         }
-        if (phaseCutEnable & PC_ENABLE_FOR_LED2)
+        if (arr_led[1].phaseCutTime)
         {
             LED2 = LED_LOW;
         }
 
-        if (phaseCutEnable & PC_ENABLE_FOR_LED3)
+        if (arr_led[2].phaseCutTime)
         {
             LED3 = LED_LOW;
         }
-        if (phaseCutEnable & PC_ENABLE_FOR_LED4)
+        if (arr_led[2].phaseCutTime)
         {
             LED4 = LED_LOW;
         }
+
+        smoothDimHandler();
 
         //find a non-zero value from allSwitchTiming array
         //for the next cmp value to be filled
@@ -187,6 +191,39 @@ void TMR1_IRQHandler(void)
         setLed(allSwitchTiming[SwitchTimingIndex]);
 }
 
+
+void smoothDimHandler(void)
+{
+    uint8_t found = 0;
+    for (int i = 0; i < MAX_NUMBER_LED; i++)
+    {
+         if (smoothDimActive & SM_ENABLE_FOR_LED(i))
+        {
+            
+             if (arr_led[i].phaseCutTime > arr_led[i].smoothDimTime)
+             {
+                 arr_led[i].smoothDimTime += SM_LEVEL;
+             }
+            else if (arr_led[i].phaseCutTime < arr_led[i].smoothDimTime)
+            {
+                arr_led[i].smoothDimTime -= SM_LEVEL;
+            }
+            if (arr_led[i].phaseCutTime == arr_led[i].smoothDimTime)
+            {
+                //uint8_t temp =  SM_ENABLE_FOR_LED(i);
+                smoothDimActive &= ~SM_ENABLE_FOR_LED(i);
+                
+            }
+             found = 1;
+        }
+    }
+    if (found)
+    {
+        updateAllTimings();
+    }
+
+}
+
 /*ak*/
 uint8_t keus_ports[4] = {2, 2, 2, 2};
 uint8_t keus_bits[4] = {2, 3, 4, 5};
@@ -196,11 +233,11 @@ void setLed(uint16_t timingValue)
     uint8_t duplicate = 0;
     for (int i = 0; i < MAX_NUMBER_LED; i++)
     {
-        if (arr_led[i].phaseCutTime == timingValue)
+        if (arr_led[i].smoothDimTime == timingValue)
         {
             duplicate++;
 
-            if (phaseCutEnable & PC_ENABLE_FOR_LED(i))
+            if (arr_led[i].phaseCutTime)
             {
                 GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_HIGH;
             }

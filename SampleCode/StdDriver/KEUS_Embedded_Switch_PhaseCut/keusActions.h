@@ -16,6 +16,12 @@
 #define PC_ENABLE_FOR_LED3 0x4
 #define PC_ENABLE_FOR_LED4 0x8
 
+//Smoothdim enabled bitmasks
+#define SM_ENABLE_FOR_LED1 0x1
+#define SM_ENABLE_FOR_LED2 0x2
+#define SM_ENABLE_FOR_LED3 0x4
+#define SM_ENABLE_FOR_LED4 0x8
+
 #define CONFIGNORMAL 1
 #define CONFIGDIM 2
 #define CONFIGFAN 3
@@ -58,6 +64,7 @@ extern void UART_tx(uint8_t arr[], uint8_t datalen);
 extern void setPhaseCut(uint8_t ledno, uint8_t state);
 extern void updateAllTimings(void);
 extern volatile uint8_t phaseCutEnable;
+extern volatile uint8_t smoothDimActive;
 
 void parseUart(void);
 void taskHandler(void);
@@ -76,6 +83,7 @@ struct led
     uint8_t state;
     uint8_t config;
     uint32_t phaseCutTime;
+    volatile uint32_t smoothDimTime;
 };
 
 struct led arr_led[MAX_NUMBER_LED];

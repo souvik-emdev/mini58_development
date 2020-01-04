@@ -3,21 +3,31 @@
 
 #define MAX_NUMBER_LED 4
 
-//Phasecut enabled bitmasks
-#define PC_ENABLE_FOR_LED1 0x1
-#define PC_ENABLE_FOR_LED2 0x2
-#define PC_ENABLE_FOR_LED3 0x4
-#define PC_ENABLE_FOR_LED4 0x8
+// //Phasecut enabled bitmasks
+// #define PC_ENABLE_FOR_LED1 0x1
+// #define PC_ENABLE_FOR_LED2 0x2
+// #define PC_ENABLE_FOR_LED3 0x4
+// #define PC_ENABLE_FOR_LED4 0x8
+
+//Smoothdim enabled bitmasks
+#define SM_ENABLE_FOR_LED1 0x1
+#define SM_ENABLE_FOR_LED2 0x2
+#define SM_ENABLE_FOR_LED3 0x4
+#define SM_ENABLE_FOR_LED4 0x8
+
+#define SM_LEVEL 58
+
 
 // #define MIN_ALLOWED_DIMMING 2 //1% OF 255
 // #define MAX_ALLOWED_DIMMING 243 //95% OF 255
 
-#define MIN_ALLOWED_CMPVALUE 300
-#define MAX_ALLOWED_CMPVALUE 14500
+//#define MIN_ALLOWED_CMPVALUE 300
+//#define MAX_ALLOWED_CMPVALUE 14500
 
-#define PHASE_CUT_RESET 14750 //must be higher than MAX_ALLOWED_CMPVALUE
+#define PHASE_CUT_RESET 14800 //must be higher than MAX_ALLOWED_CMPVALUE
 
-#define PC_ENABLE_FOR_LED(x) (1 << (x))
+//#define PC_ENABLE_FOR_LED(x) (1 << (x))
+#define SM_ENABLE_FOR_LED(x) (1 << (x))
 
 #define LEDID1 1
 #define LEDID2 2
@@ -32,7 +42,8 @@
 #define LED3 P24
 #define LED4 P25
 
-volatile uint8_t phaseCutEnable = 0;
+volatile uint8_t smoothDimActive = 0;
+//volatile uint8_t phaseCutEnable = 0;
 uint32_t allSwitchTiming[MAX_NUMBER_LED+2];
 volatile uint8_t SwitchTimingIndex = 0;
 
@@ -44,12 +55,14 @@ uint16_t calculateCmpValue(uint8_t dim_level);
 void updateAllTimings (void);
 void phaseCutInit(void);
 void setLed (uint16_t timingValue);
+void smoothDimHandler(void);
 
 extern struct led
 {
     uint8_t state;
     uint8_t config;
     uint32_t phaseCutTime;
+    volatile uint32_t smoothDimTime;
 };
 
 extern struct led arr_led[MAX_NUMBER_LED];
