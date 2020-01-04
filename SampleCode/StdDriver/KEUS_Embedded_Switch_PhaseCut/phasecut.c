@@ -6,23 +6,21 @@
 #include "Mini58Series.h"
 #include "phasecut.h"
 
-
-
-/**
- * @brief       Mapping values to a different range
- *
- * @param       value to map, min value of input
- *              range, max value of input range, min value of o/p range
- *              max value of o/p range
- *
- * @return      mapped value
- *
- * @details     Required for mapping range 0-255 to 0-9500
- */
-uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max)
-{
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
+// /**
+//  * @brief       Mapping values to a different range
+//  *
+//  * @param       value to map, min value of input
+//  *              range, max value of input range, min value of o/p range
+//  *              max value of o/p range
+//  *
+//  * @return      mapped value
+//  *
+//  * @details     Required for mapping range 0-255 to 0-9500
+//  */
+// uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max)
+// {
+//     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+// }
 
 //Sorts the all_timing array
 void sortTimings(void)
@@ -42,9 +40,20 @@ void sortTimings(void)
     }
 }
 
-uint16_t calculateCmpValue(uint16_t timingMicroSec)
+uint16_t calculateCmpValue(uint8_t dim_level)
 {
-    return (1.5 * timingMicroSec);
+    uint16_t cmpValue = 15000 - ((dim_level * 15000)/255);
+
+    if (cmpValue < MIN_ALLOWED_CMPVALUE)
+    {
+        cmpValue = MIN_ALLOWED_CMPVALUE;
+    }
+
+    else if (cmpValue > MAX_ALLOWED_CMPVALUE)
+    {
+        cmpValue = MAX_ALLOWED_CMPVALUE;
+    }
+    return cmpValue;
 }
 
 //Picks up the timing values from led structs and call sorting function
@@ -59,27 +68,28 @@ void updateAllTimings(void)
 
 void setPhaseCut(uint8_t ledno, uint8_t state)
 {
-    if (state < 26)
-    {
-        state = 26;
-    } //Less than 10% is not allowed
-    else if (state > 243)
-    {
-        state = 243;
-    } //greter than 95% is not allowed
-    state = 255 - state;
-    arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 9500));
+    // if (state < MIN_ALLOWED_DIMMING)
+    // {
+    //     state = MIN_ALLOWED_DIMMING;
+    // }
+    // else if (state > MAX_ALLOWED_DIMMING)
+    // {
+    //     state = MAX_ALLOWED_DIMMING;
+    // }
+    // state = 255 - state;
+    // arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 10000));
+    arr_led[ledno - 1].phaseCutTime = calculateCmpValue(state);
     updateAllTimings(); //fill allSwitchTiming and sort it
 }
 
 void phaseCutInit(void)
 {
     TIMER1->CTL = TIMER_CONTINUOUS_MODE | 7;
-    TIMER1->CMP = 14400; //9.6ms
+    TIMER1->CMP = PHASE_CUT_RESET; //9.6ms
     SwitchTimingIndex = 4;
     TIMER_EnableInt(TIMER1);
     NVIC_EnableIRQ(TMR1_IRQn);
-    allSwitchTiming[MAX_NUMBER_LED] = 14400;     //9.6ms
+    allSwitchTiming[MAX_NUMBER_LED] = PHASE_CUT_RESET;     //9.6ms
     allSwitchTiming[MAX_NUMBER_LED + 1] = 15000; //10ms
     TIMER_Start(TIMER1);
 }
@@ -190,10 +200,10 @@ void setLed(uint16_t timingValue)
         {
             duplicate++;
 
-             if (phaseCutEnable & PC_ENABLE_FOR_LED(i))
-             {
-                 GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_HIGH;
-             }
+            if (phaseCutEnable & PC_ENABLE_FOR_LED(i))
+            {
+                GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_HIGH;
+            }
 
             //////////OLD METHOD FOR SETTING THE OUTPUT
             // switch (i)

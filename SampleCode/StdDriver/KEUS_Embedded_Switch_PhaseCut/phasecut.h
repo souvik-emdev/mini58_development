@@ -9,6 +9,14 @@
 #define PC_ENABLE_FOR_LED3 0x4
 #define PC_ENABLE_FOR_LED4 0x8
 
+// #define MIN_ALLOWED_DIMMING 2 //1% OF 255
+// #define MAX_ALLOWED_DIMMING 243 //95% OF 255
+
+#define MIN_ALLOWED_CMPVALUE 300
+#define MAX_ALLOWED_CMPVALUE 14500
+
+#define PHASE_CUT_RESET 14750
+
 #define PC_ENABLE_FOR_LED(x) (1 << (x))
 
 #define LEDID1 1
@@ -28,10 +36,11 @@ volatile uint8_t phaseCutEnable = 0;
 uint32_t allSwitchTiming[MAX_NUMBER_LED+2];
 volatile uint8_t SwitchTimingIndex = 0;
 
-uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max);
+//uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max);
 void sortTimings(void);
 void setPhaseCut(uint8_t ledno, uint8_t state);
-uint16_t calculateCmpValue(uint16_t timingMicroSec);
+//uint16_t calculateCmpValue(uint16_t timingMicroSec);
+uint16_t calculateCmpValue(uint8_t dim_level);
 void updateAllTimings (void);
 void phaseCutInit(void);
 void setLed (uint16_t timingValue);
