@@ -14,7 +14,7 @@
  * @return      Nothing
  *
  * @details     Whenever a button is pressed it toggles the output state and
- *              sends the info via UART
+ *              sends the info via UART. Also stops the phasecut if it was enabled.
  */
 void toggleLed(uint8_t ledno)
 {
@@ -40,8 +40,10 @@ void toggleLed(uint8_t ledno)
         }
         if (arr_led[0].phaseCutTime)
         {
+            //clear phasecut enable bit
             phaseCutEnable &= ~PC_ENABLE_FOR_LED1;
             arr_led[0].phaseCutTime = 0;
+            //Update timing array and sort it
             updateAllTimings();
         }
 
@@ -117,135 +119,7 @@ void toggleLed(uint8_t ledno)
     sendReply[datalen++] = ledno;
     sendReply[datalen++] = arr_led[ledno - 1].state;
     UART_tx(sendReply, datalen);
-    //retryGettingAck(sendReply, datalen);
-
-    // if (ledno == LEDID1 && arr_led[0].config)
-    // {
-
-    //     if (arr_led[0].state < 1)
-    //     {
-    //         arr_led[0].state = 255;
-    //         if (arr_led[0].config == 1)
-    //         {
-    //             LED1 = LED_HIGH;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID1, arr_led[0].state);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         arr_led[0].state = 0;
-    //         if (arr_led[0].config == 1)
-    //         {
-    //             LED1 = LED_LOW;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID1, arr_led[0].state);
-    //         }
-    //     }
-    //     sendReply[datalen++] = LEDID1;
-    //     sendReply[datalen++] = arr_led[0].state;
-    //     UART_tx(sendReply, datalen);
-    //     //retryGettingAck(sendReply, datalen);
-    // }
-
-    // else if (ledno == LEDID2 && arr_led[1].config)
-    // {
-    //     if (arr_led[1].state < 1)
-    //     {
-    //         arr_led[1].state = 255;
-    //         if (arr_led[1].config == 1)
-    //         {
-    //             LED2 = LED_HIGH;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID2, arr_led[1].state);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         arr_led[1].state = 0;
-    //         if (arr_led[1].config == 1)
-    //         {
-    //             LED2 = LED_LOW;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID2, arr_led[1].state);
-    //         }
-    //     }
-    //     sendReply[datalen++] = LEDID2;
-    //     sendReply[datalen++] = arr_led[1].state;
-    //     UART_tx(sendReply, datalen);
-    //     retryGettingAck(sendReply, datalen);
-    // }
-
-    // else if (ledno == LEDID3 && arr_led[2].config)
-    // {
-    //     if (arr_led[2].state < 1)
-    //     {
-    //         arr_led[2].state = 255;
-    //         if (arr_led[2].config == 1)
-    //         {
-    //             LED3 = LED_HIGH;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID3, arr_led[2].state);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         arr_led[2].state = 0;
-    //         if (arr_led[2].config == 1)
-    //         {
-    //             LED3 = LED_LOW;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID3, arr_led[2].state);
-    //         }
-    //     }
-    //     sendReply[datalen++] = LEDID3;
-    //     sendReply[datalen++] = arr_led[2].state;
-    //     UART_tx(sendReply, datalen);
-    //     retryGettingAck(sendReply, datalen);
-    // }
-    // else if (ledno == LEDID4 && arr_led[3].config)
-    // {
-    //     if (arr_led[3].state < 1)
-    //     {
-    //         arr_led[3].state = 255;
-    //         if (arr_led[3].config == 1)
-    //         {
-    //             LED4 = LED_HIGH;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID4, arr_led[3].state);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         arr_led[3].state = 0;
-    //         if (arr_led[3].config == 1)
-    //         {
-    //             LED4 = LED_LOW;
-    //         }
-    //         else
-    //         {
-    //             //setPwmDuty(LEDID4, arr_led[3].state);
-    //         }
-    //     }
-    //     sendReply[datalen++] = LEDID4;
-    //     sendReply[datalen++] = arr_led[3].state;
-    //     UART_tx(sendReply, datalen);
-    //     retryGettingAck(sendReply, datalen);
-    // }
+    retryGettingAck(sendReply, datalen);
 }
 
 /**
@@ -271,7 +145,7 @@ void executeSwitchState(void)
         switch (switchId)
         {
         case LEDID1:
-
+            //Clear phasecut enable bit
             phaseCutEnable &= ~PC_ENABLE_FOR_LED1;
             if (arr_led[0].config == CONFIGNORMAL)
             {
@@ -288,17 +162,25 @@ void executeSwitchState(void)
             }
             else //for config other than normal: dim & fan
             {
-                if (state == 0)
+
+                if (state == 0 || state == 255)
                 {
-                    LED1 = LED_LOW;
-                }
-                else if (state == 255)
-                {
-                    LED1 = LED_HIGH;
+                    arr_led[0].phaseCutTime = 0;
+                    //Update timing array and sort it
+                    updateAllTimings();
+                    if (state == 0)
+                    {
+                        LED1 = LED_LOW;
+                    }
+                    else if (state == 255)
+                    {
+                        LED1 = LED_HIGH;
+                    }
                 }
                 else
                 {
                     //phaseCutEnable |= (1 << (LEDID1 - 1));
+                    //Set phasecut bit mask
                     phaseCutEnable |= PC_ENABLE_FOR_LED1;
                     setPhaseCut(LEDID1, state);
                 }
@@ -326,13 +208,20 @@ void executeSwitchState(void)
             }
             else
             {
-                if (state == 0)
+                if (state == 0 || state == 255)
                 {
-                    LED2 = LED_LOW;
-                }
-                else if (state == 255)
-                {
-                    LED2 = LED_HIGH;
+                    arr_led[1].phaseCutTime = 0;
+                    //Update timing array and sort it
+                    updateAllTimings();
+
+                    if (state == 0)
+                    {
+                        LED2 = LED_LOW;
+                    }
+                    else if (state == 255)
+                    {
+                        LED2 = LED_HIGH;
+                    }
                 }
                 else
                 {
@@ -362,13 +251,19 @@ void executeSwitchState(void)
             }
             else
             {
-                if (state == 0)
+                if (state == 0 || state == 255)
                 {
-                    LED3 = LED_LOW;
-                }
-                else if (state == 255)
-                {
-                    LED3 = LED_HIGH;
+                    arr_led[2].phaseCutTime = 0;
+                    //Update timing array and sort it
+                    updateAllTimings();
+                    if (state == 0)
+                    {
+                        LED3 = LED_LOW;
+                    }
+                    else if (state == 255)
+                    {
+                        LED3 = LED_HIGH;
+                    }
                 }
                 else
                 {
@@ -398,13 +293,19 @@ void executeSwitchState(void)
             }
             else
             {
-                if (state == 0)
+                if (state == 0 || state == 255)
                 {
-                    LED4 = LED_LOW;
-                }
-                else if (state == 255)
-                {
-                    LED4 = LED_HIGH;
+                    arr_led[3].phaseCutTime = 0;
+                    //Update timing array and sort it
+                    updateAllTimings();
+                    if (state == 0)
+                    {
+                        LED4 = LED_LOW;
+                    }
+                    else if (state == 255)
+                    {
+                        LED4 = LED_HIGH;
+                    }
                 }
                 else
                 {
@@ -446,6 +347,7 @@ void retryGettingAck(uint8_t arr[], uint8_t dataLen)
 
     retryDataLen = dataLen; // copies to seperate length var
 
+    retryGettingAckEnabled = 1;
     // Set timer 0 working 1Hz in periodic mode
     // TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 1);
 
@@ -476,6 +378,16 @@ void TMR0_IRQHandler(void)
     //reset timer 1
     TIMER1->CTL |= TIMER_CTL_RSTCNT_Msk;
     TIMER1->CTL |= TIMER_CTL_CNTEN_Msk;
+    //Tx info every 800ms
+    if (retryGettingAckEnabled)
+    {
+        retryTimerCount++;
+        if (retryTimerCount >= 80)
+        {
+            retryTimerCount = 0;
+            UART_tx(retryBuffer, retryDataLen);
+        }
+    }
 }
 
 //copies the uart received data into seperate buffer and call taskHandler to perform task
@@ -502,18 +414,18 @@ void taskHandler(void)
     case TASK_CONFIG_SWITCH:
         configSwitch();
         break;
-    case TASK_GET_SWITCH_STATE:
-        getSwitchState();
-        break;
+    // case TASK_GET_SWITCH_STATE:
+    //     getSwitchState();
+    //     break;
 
-    case TASK_GET_CONFIG:
-        getConfig();
-        break;
+    // case TASK_GET_CONFIG:
+    //     getConfig();
+    //     break;
     case TASK_EXECUTE_SWITCH_STATE:
         executeSwitchState();
         break;
 
-    case TASK_UART_ACK:
+    case TASK_UART_RETRY_ACK:
         uartAck();
         break;
 
@@ -525,10 +437,10 @@ void taskHandler(void)
 //At start up configures all switches as normal off/on type
 void keus_config_switch_init(void)
 {
-    arr_led[0].config = CONFIGDIM;
-    arr_led[1].config = CONFIGDIM;
-    arr_led[2].config = CONFIGDIM;
-    arr_led[3].config = CONFIGDIM;
+    arr_led[0].config = CONFIGNORMAL;
+    arr_led[1].config = CONFIGNORMAL;
+    arr_led[2].config = CONFIGNORMAL;
+    arr_led[3].config = CONFIGNORMAL;
 
     SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
     SYS->P2_MFP |= SYS_MFP_P22_GPIO;
@@ -624,67 +536,72 @@ void configSwitch(void)
     UART_tx(sendReply, datalen);
 }
 
-//Sends all switch state info via uart
-void getSwitchState(void)
-{
-    //Example msg: <replyID><txnID><no of switch><switchid><state><switchid><state>....
-    //Send UART: 28<size><commandid 2><txnid>29
-    //28 02 02 04 29
+// //Sends all switch state info via uart
+// void getSwitchState(void)
+// {
+//     //Example msg: <replyID><txnID><no of switch><switchid><state><switchid><state>....
+//     //Send UART: 28<size><commandid 2><txnid>29
+//     //28 02 02 04 29
 
-    uint8_t sendState[15], position = 3, datalen = 0;
-    sendState[0] = GETSWITCHSTATEREPLY;
-    datalen++;
-    sendState[1] = txnId;
-    datalen++;
-    sendState[2] = MAX_NUMBER_LED;
-    datalen++;
-    for (int i = 0; i < MAX_NUMBER_LED; i++)
-    {
-        sendState[position] = i + 1; //switch ID
-        datalen++;
-        sendState[position + 1] = arr_led[i].state;
-        datalen++;
-        position += 2;
-    }
+//     uint8_t sendState[15], position = 3, datalen = 0;
+//     sendState[0] = GETSWITCHSTATEREPLY;
+//     datalen++;
+//     sendState[1] = txnId;
+//     datalen++;
+//     sendState[2] = MAX_NUMBER_LED;
+//     datalen++;
+//     for (int i = 0; i < MAX_NUMBER_LED; i++)
+//     {
+//         sendState[position] = i + 1; //switch ID
+//         datalen++;
+//         sendState[position + 1] = arr_led[i].state;
+//         datalen++;
+//         position += 2;
+//     }
 
-    UART_tx(sendState, datalen);
-}
+//     UART_tx(sendState, datalen);
+// }
 
-//Sends all switch config info via uart
-void getConfig(void)
-{
-    //Example msg: <replyID><txnID><no of switch><switchid><config><switchid><config>....
-    //Send UART: 28<size><commandid 2><txnid>29
-    //28 02 03 04 29
+// //Sends all switch config info via uart
+// void getConfig(void)
+// {
+//     //Example msg: <replyID><txnID><no of switch><switchid><config><switchid><config>....
+//     //Send UART: 28<size><commandid 2><txnid>29
+//     //28 02 03 04 29
 
-    uint8_t sendState[15], position = 3, datalen = 0;
-    sendState[datalen++] = GETCONFIGREPLY;
-    sendState[datalen++] = txnId;
-    sendState[datalen++] = MAX_NUMBER_LED;
-    for (int i = 0; i < MAX_NUMBER_LED; i++)
-    {
-        sendState[position] = i + 1; //switch ID
-        datalen++;
-        sendState[position + 1] = arr_led[i].config;
-        datalen++;
-        position += 2;
-    }
+//     uint8_t sendState[15], position = 3, datalen = 0;
+//     sendState[datalen++] = GETCONFIGREPLY;
+//     sendState[datalen++] = txnId;
+//     sendState[datalen++] = MAX_NUMBER_LED;
+//     for (int i = 0; i < MAX_NUMBER_LED; i++)
+//     {
+//         sendState[position] = i + 1; //switch ID
+//         datalen++;
+//         sendState[position + 1] = arr_led[i].config;
+//         datalen++;
+//         position += 2;
+//     }
 
-    UART_tx(sendState, datalen);
-}
+//     UART_tx(sendState, datalen);
+// }
 
-//Stopes the timer which sends switch press info periodically on getting ack
+//Stopes the timer counter which sends switch press info periodically on getting ack
 void uartAck(void)
 {
     if (txnId == retryBuffer[1])
     {
-        TIMER_Close(TIMER0);
+        //TIMER_Close(TIMER0);
+        retryGettingAckEnabled = 0;
+        retryTimerCount = 0;
     }
 }
 
 void updateTxnId(void)
 {
-    if (txnId == 255)
-        txnId = 0;
-    txnId++;
+    // if (txnId == 255)
+    //     txnId = 0;
+    // txnId++;
+
+    //As requested by Monisha, txn fixed to 1
+    txnId = 1;
 }

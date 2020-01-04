@@ -18,6 +18,7 @@
 
 #define PLL_CLOCK 50000000
 
+//Event bit masks
 #define KEUS_BUTTON1 0x1
 #define KEUS_BUTTON2 0x2
 #define KEUS_BUTTON3 0x4
@@ -31,16 +32,16 @@
 
 uint8_t tester = 0;
 
-
+//Called on button press event
 extern void toggleLed(uint8_t);
+//Called on every UART event
 extern void parseUart(void);
 extern void keus_uart_init(void);
 extern void keus_button_init(void);
 extern void keus_config_switch_init(void);
 extern void phaseCutInit(void);
 
-uint32_t keusAppEvents;
-
+volatile uint32_t keusAppEvents;
 
 void keusZeroCrossInit(void)
 {
@@ -58,13 +59,16 @@ void keusZeroCrossInit(void)
 
 void KEUS_init(void)
 {
-
+  //Setup tx and rx pins, baud rate
   keus_uart_init();
+  //Setup all four input pins and interrupt, debounce
   keus_button_init();
+  //Setup output pins and default switch types
   keus_config_switch_init();
+  //Setup timer1
   phaseCutInit();
+  //Setup timer0 to simulate zero-cross detector
   keusZeroCrossInit();
-
 
   while (1)
   {
@@ -72,7 +76,8 @@ void KEUS_init(void)
     {
       tester++;
     }
-    else continue;
+    else
+      continue;
 
     if (keusAppEvents & KEUS_BUTTON1)
     {
@@ -101,7 +106,6 @@ void KEUS_init(void)
       keusAppEvents ^= KEUS_UART;
     }
   }
-
 }
 
 void SYS_Init(void)

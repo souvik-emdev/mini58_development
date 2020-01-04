@@ -10,7 +10,7 @@
 #define KEUS_UART_BUFFER 10
 #define KEUS_UART 0x10
 
-extern uint32_t keusAppEvents;
+extern volatile uint32_t keusAppEvents;;
 
 void UART_tx(uint8_t arr[], uint8_t datalen);
 void keus_uart_init (void);

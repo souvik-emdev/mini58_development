@@ -10,7 +10,7 @@
 #define KEUS_BUTTON4 0x8
 #define KEUS_UART 0x10
 
-extern uint32_t keusAppEvents;
+extern volatile uint32_t keusAppEvents;;
 
 void GPIO234_IRQHandler(void);
 void EINT1_IRQHandler(void);

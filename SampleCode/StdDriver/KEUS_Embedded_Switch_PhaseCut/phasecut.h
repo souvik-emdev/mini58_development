@@ -3,10 +3,12 @@
 
 #define MAX_NUMBER_LED 4
 
+//Phasecut enabled bitmasks
 #define PC_ENABLE_FOR_LED1 0x1
 #define PC_ENABLE_FOR_LED2 0x2
 #define PC_ENABLE_FOR_LED3 0x4
 #define PC_ENABLE_FOR_LED4 0x8
+
 #define PC_ENABLE_FOR_LED(x) (1 << (x))
 
 #define LEDID1 1
@@ -26,7 +28,7 @@ volatile uint8_t phaseCutEnable = 0;
 uint32_t allSwitchTiming[MAX_NUMBER_LED+2];
 volatile uint8_t SwitchTimingIndex = 0;
 
-long map(long x, long in_min, long in_max, long out_min, long out_max);
+uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max);
 void sortTimings(void);
 void setPhaseCut(uint8_t ledno, uint8_t state);
 uint16_t calculateCmpValue(uint16_t timingMicroSec);

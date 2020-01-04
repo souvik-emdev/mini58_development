@@ -17,28 +17,21 @@
  *
  * @return      mapped value
  *
- * @details     Required for mapping range 0-255 to 0-100 
+ * @details     Required for mapping range 0-255 to 0-9500
  */
-long map(long x, long in_min, long in_max, long out_min, long out_max)
+uint16_t map(uint16_t x, uint8_t in_min, uint8_t in_max, uint16_t out_min, uint16_t out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+//Sorts the all_timing array
 void sortTimings(void)
 {
     int i, j, temp;
     for (i = 0; i < MAX_NUMBER_LED; i++)
     {
-        /* 
-         * Place currently selected element allSwitchTimingay[i]
-         * to its correct place.
-         */
         for (j = i + 1; j < MAX_NUMBER_LED; j++)
         {
-            /* 
-             * Swap if currently selected allSwitchTimingay element
-             * is not at its correct position.
-             */
             if (allSwitchTiming[i] > allSwitchTiming[j])
             {
                 temp = allSwitchTiming[i];
@@ -54,6 +47,7 @@ uint16_t calculateCmpValue(uint16_t timingMicroSec)
     return (1.5 * timingMicroSec);
 }
 
+//Picks up the timing values from led structs and call sorting function
 void updateAllTimings(void)
 {
     for (int i = 0; i < MAX_NUMBER_LED; i++)
@@ -74,18 +68,8 @@ void setPhaseCut(uint8_t ledno, uint8_t state)
         state = 243;
     } //greter than 95% is not allowed
     state = 255 - state;
-    //uint16_t requiredTiming = map(state, 0, 255, 0, 9500);
     arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 9500));
     updateAllTimings(); //fill allSwitchTiming and sort it
-
-    // if (!phaseCutEnable)
-    // {
-    //     TIMER_Start(TIMER1);
-    // }
-
-    //phaseCutEnable |= (1 << (ledno-1));
-
-    //TIMER1->CMP = allSwitchTiming[0];
 }
 
 void phaseCutInit(void)
@@ -210,6 +194,8 @@ void setLed(uint16_t timingValue)
              {
                  GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_HIGH;
              }
+
+            //////////OLD METHOD FOR SETTING THE OUTPUT
             // switch (i)
             // {
             // case 0:
