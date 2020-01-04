@@ -72816,6 +72816,62 @@
     "scope": null
   },
   {
+    "ID": "c:@F@GPIO_SetMode",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void GPIO_SetMode(GPIO_T *, uint32_t, uint32_t)",
+    "location": {
+      "column": "6",
+      "line": "43",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
+    },
+    "name": "GPIO_SetMode",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:gpio.c@1371@F@GPIO_SetMode@i",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "i",
+    "location": {
+      "column": "14",
+      "line": "45",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
+    },
+    "name": "i",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@GPIO_EnableInt",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void GPIO_EnableInt(GPIO_T *, uint32_t, uint32_t)",
+    "location": {
+      "column": "6",
+      "line": "72",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
+    },
+    "name": "GPIO_EnableInt",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@GPIO_DisableInt",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void GPIO_DisableInt(GPIO_T *, uint32_t)",
+    "location": {
+      "column": "6",
+      "line": "89",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
+    },
+    "name": "GPIO_DisableInt",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
     "ID": "c:@F@CLK_DisableCKO",
     "What": "Function",
     "defdec": "Def",
@@ -73376,6 +73432,244 @@
     "scope": null
   },
   {
+    "ID": "c:@F@sortTimings",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void sortTimings(void)",
+    "location": {
+      "column": "6",
+      "line": "26",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "sortTimings",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@771@F@sortTimings@i",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "i",
+    "location": {
+      "column": "9",
+      "line": "28",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "i",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@771@F@sortTimings@j",
+    "What": "Variable",
+    "defdec": "Dec",
+    "display": "j",
+    "location": {
+      "column": "12",
+      "line": "28",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "j",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@771@F@sortTimings@temp",
+    "What": "Variable",
+    "defdec": "Dec",
+    "display": "temp",
+    "location": {
+      "column": "15",
+      "line": "28",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "temp",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@calculateCmpValue",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "uint16_t calculateCmpValue(uint8_t)",
+    "location": {
+      "column": "10",
+      "line": "43",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "calculateCmpValue",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@1209@F@calculateCmpValue@cmpValue",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "cmpValue",
+    "location": {
+      "column": "14",
+      "line": "45",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "cmpValue",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@updateAllTimings",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void updateAllTimings(void)",
+    "location": {
+      "column": "6",
+      "line": "60",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "updateAllTimings",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@1611@F@updateAllTimings@i",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "i",
+    "location": {
+      "column": "14",
+      "line": "62",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "i",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@setPhaseCut",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void setPhaseCut(uint8_t, uint8_t)",
+    "location": {
+      "column": "6",
+      "line": "69",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "setPhaseCut",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@phaseCutInit",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void phaseCutInit(void)",
+    "location": {
+      "column": "6",
+      "line": "85",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "phaseCutInit",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@TMR1_IRQHandler",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void TMR1_IRQHandler(void)",
+    "location": {
+      "column": "6",
+      "line": "97",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "TMR1_IRQHandler",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@4470@F@TMR1_IRQHandler@i",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "i",
+    "location": {
+      "column": "18",
+      "line": "168",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "i",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@keus_ports",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "keus_ports",
+    "location": {
+      "column": "9",
+      "line": "191",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "keus_ports",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@keus_bits",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "keus_bits",
+    "location": {
+      "column": "9",
+      "line": "192",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "keus_bits",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@setLed",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void setLed(uint16_t)",
+    "location": {
+      "column": "6",
+      "line": "194",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "setLed",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@5196@F@setLed@duplicate",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "duplicate",
+    "location": {
+      "column": "13",
+      "line": "196",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "duplicate",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:phasecut.c@5229@F@setLed@i",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "i",
+    "location": {
+      "column": "14",
+      "line": "197",
+      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
+    },
+    "name": "i",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
     "ID": "c:phasecut.h@37@macro@PHASECUT_H_INCLUDED",
     "What": "MacroDef",
     "defdec": "Def",
@@ -73502,7 +73796,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@457@macro@PC_ENABLE_FOR_LED",
+    "ID": "c:phasecut.h@500@macro@PC_ENABLE_FOR_LED",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "PC_ENABLE_FOR_LED",
@@ -73516,7 +73810,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@500@macro@LEDID1",
+    "ID": "c:phasecut.h@543@macro@LEDID1",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LEDID1",
@@ -73530,7 +73824,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@518@macro@LEDID2",
+    "ID": "c:phasecut.h@561@macro@LEDID2",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LEDID2",
@@ -73544,7 +73838,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@536@macro@LEDID3",
+    "ID": "c:phasecut.h@579@macro@LEDID3",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LEDID3",
@@ -73558,7 +73852,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@554@macro@LEDID4",
+    "ID": "c:phasecut.h@597@macro@LEDID4",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LEDID4",
@@ -73572,7 +73866,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@574@macro@LED_HIGH",
+    "ID": "c:phasecut.h@617@macro@LED_HIGH",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED_HIGH",
@@ -73586,7 +73880,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@594@macro@LED_LOW",
+    "ID": "c:phasecut.h@637@macro@LED_LOW",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED_LOW",
@@ -73600,7 +73894,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@615@macro@LED1",
+    "ID": "c:phasecut.h@658@macro@LED1",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED1",
@@ -73614,7 +73908,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@633@macro@LED2",
+    "ID": "c:phasecut.h@676@macro@LED2",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED2",
@@ -73628,7 +73922,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@651@macro@LED3",
+    "ID": "c:phasecut.h@694@macro@LED3",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED3",
@@ -73642,7 +73936,7 @@
     "scope": null
   },
   {
-    "ID": "c:phasecut.h@669@macro@LED4",
+    "ID": "c:phasecut.h@712@macro@LED4",
     "What": "MacroDef",
     "defdec": "Def",
     "display": "LED4",
@@ -73851,300 +74145,6 @@
     },
     "name": "arr_led",
     "origin": "user_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@sortTimings",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void sortTimings(void)",
-    "location": {
-      "column": "6",
-      "line": "26",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "sortTimings",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@771@F@sortTimings@i",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "i",
-    "location": {
-      "column": "9",
-      "line": "28",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "i",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@771@F@sortTimings@j",
-    "What": "Variable",
-    "defdec": "Dec",
-    "display": "j",
-    "location": {
-      "column": "12",
-      "line": "28",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "j",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@771@F@sortTimings@temp",
-    "What": "Variable",
-    "defdec": "Dec",
-    "display": "temp",
-    "location": {
-      "column": "15",
-      "line": "28",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "temp",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@calculateCmpValue",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "uint16_t calculateCmpValue(uint8_t)",
-    "location": {
-      "column": "10",
-      "line": "43",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "calculateCmpValue",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@1209@F@calculateCmpValue@cmpValue",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "cmpValue",
-    "location": {
-      "column": "14",
-      "line": "45",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "cmpValue",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@updateAllTimings",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void updateAllTimings(void)",
-    "location": {
-      "column": "6",
-      "line": "60",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "updateAllTimings",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@1611@F@updateAllTimings@i",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "i",
-    "location": {
-      "column": "14",
-      "line": "62",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "i",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@setPhaseCut",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void setPhaseCut(uint8_t, uint8_t)",
-    "location": {
-      "column": "6",
-      "line": "69",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "setPhaseCut",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@phaseCutInit",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void phaseCutInit(void)",
-    "location": {
-      "column": "6",
-      "line": "85",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "phaseCutInit",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@TMR1_IRQHandler",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void TMR1_IRQHandler(void)",
-    "location": {
-      "column": "6",
-      "line": "97",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "TMR1_IRQHandler",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@4457@F@TMR1_IRQHandler@i",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "i",
-    "location": {
-      "column": "18",
-      "line": "168",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "i",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@keus_ports",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "keus_ports",
-    "location": {
-      "column": "9",
-      "line": "191",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "keus_ports",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@keus_bits",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "keus_bits",
-    "location": {
-      "column": "9",
-      "line": "192",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "keus_bits",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@setLed",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void setLed(uint16_t)",
-    "location": {
-      "column": "6",
-      "line": "194",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "setLed",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@5183@F@setLed@duplicate",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "duplicate",
-    "location": {
-      "column": "13",
-      "line": "196",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "duplicate",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:phasecut.c@5216@F@setLed@i",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "i",
-    "location": {
-      "column": "14",
-      "line": "197",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\SampleCode\\StdDriver\\KEUS_Embedded_Switch_PhaseCut\\phasecut.c"
-    },
-    "name": "i",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@GPIO_SetMode",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void GPIO_SetMode(GPIO_T *, uint32_t, uint32_t)",
-    "location": {
-      "column": "6",
-      "line": "43",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
-    },
-    "name": "GPIO_SetMode",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:gpio.c@1371@F@GPIO_SetMode@i",
-    "What": "Variable",
-    "defdec": "Def",
-    "display": "i",
-    "location": {
-      "column": "14",
-      "line": "45",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
-    },
-    "name": "i",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@GPIO_EnableInt",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void GPIO_EnableInt(GPIO_T *, uint32_t, uint32_t)",
-    "location": {
-      "column": "6",
-      "line": "72",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
-    },
-    "name": "GPIO_EnableInt",
-    "origin": "project_file",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@GPIO_DisableInt",
-    "What": "Function",
-    "defdec": "Def",
-    "display": "void GPIO_DisableInt(GPIO_T *, uint32_t)",
-    "location": {
-      "column": "6",
-      "line": "89",
-      "path": "D:\\VB_Shared\\Mini58 Resources\\Mini58 development\\Library\\STDDRIVER\\src\\gpio.c"
-    },
-    "name": "GPIO_DisableInt",
-    "origin": "project_file",
     "scope": null
   },
   {

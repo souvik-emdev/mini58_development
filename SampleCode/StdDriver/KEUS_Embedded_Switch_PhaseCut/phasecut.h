@@ -15,7 +15,7 @@
 #define MIN_ALLOWED_CMPVALUE 300
 #define MAX_ALLOWED_CMPVALUE 14500
 
-#define PHASE_CUT_RESET 14750
+#define PHASE_CUT_RESET 14750 //must be higher than MAX_ALLOWED_CMPVALUE
 
 #define PC_ENABLE_FOR_LED(x) (1 << (x))
 

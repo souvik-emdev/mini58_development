@@ -86,7 +86,7 @@ void phaseCutInit(void)
 {
     TIMER1->CTL = TIMER_CONTINUOUS_MODE | 7;
     TIMER1->CMP = PHASE_CUT_RESET; //9.6ms
-    SwitchTimingIndex = 4;
+    SwitchTimingIndex = MAX_NUMBER_LED;
     TIMER_EnableInt(TIMER1);
     NVIC_EnableIRQ(TMR1_IRQn);
     allSwitchTiming[MAX_NUMBER_LED] = PHASE_CUT_RESET;     //9.6ms
