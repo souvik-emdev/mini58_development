@@ -25,10 +25,10 @@
 #define KEUS_BUTTON4 0x8
 #define KEUS_UART 0x10
 
-#define LEDID1 1
-#define LEDID2 2
-#define LEDID3 3
-#define LEDID4 4
+#define LEDID1 0
+#define LEDID2 1
+#define LEDID3 2
+#define LEDID4 3
 
 uint8_t tester = 0;
 

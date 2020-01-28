@@ -1,14 +1,14 @@
-"D:\VB_Shared\Mini58 Resources\Mini58 development\Library\STDDRIVER\src\uart.c"
+"D:\VB_Shared\Mini58 Resources\Mini58 development\SampleCode\StdDriver\KEUS_Embedded_Switch_PhaseCut\phasecut.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -MD
 -MF
-D:\VB_Shared\Mini58 Resources\Mini58 development\SampleCode\StdDriver\KEUS_Embedded_Switch_PhaseCut\IAR\Release\Obj\uart.pbi.dep
+D:\VB_Shared\Mini58 Resources\Mini58 development\SampleCode\StdDriver\KEUS_Embedded_Switch_PhaseCut\IAR\Release\Obj\phasecut.pbi.dep
 -o
-uart.pbi
+phasecut.pbi
 -I
-D:\VB_Shared\Mini58 Resources\Mini58 development\Library\STDDRIVER\src
+D:\VB_Shared\Mini58 Resources\Mini58 development\SampleCode\StdDriver\KEUS_Embedded_Switch_PhaseCut
 -I
 D:\VB_Shared\Mini58 Resources\Mini58 development\SampleCode\StdDriver\KEUS_Embedded_Switch_PhaseCut\IAR\..\..\..\..\Library\CMSIS\Include
 -I

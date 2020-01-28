@@ -29,13 +29,13 @@
 //#define PC_ENABLE_FOR_LED(x) (1 << (x))
 #define SM_ENABLE_FOR_LED(x) (1 << (x))
 
-#define LEDID1 1
-#define LEDID2 2
-#define LEDID3 3
-#define LEDID4 4
+#define LEDID1 0
+#define LEDID2 1
+#define LEDID3 2
+#define LEDID4 3
 
-#define LED_HIGH 0
-#define LED_LOW 1
+#define LED_HIGH 1
+#define LED_LOW 0
 
 #define LED1 P22
 #define LED2 P23

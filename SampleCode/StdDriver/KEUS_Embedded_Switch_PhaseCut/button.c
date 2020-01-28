@@ -27,6 +27,13 @@ void GPIO234_IRQHandler(void)
     {
         keusAppEvents |= KEUS_BUTTON3;
     }
+    //Zero Cross interrupt
+    if (P3->INTSRC & BIT6)
+    {
+        //reset timer 1
+    TIMER1->CTL |= TIMER_CTL_RSTCNT_Msk;
+    TIMER1->CTL |= TIMER_CTL_CNTEN_Msk;
+    }
     reg = P3->INTSRC;
     P3->INTSRC = reg;
 }
@@ -81,6 +88,12 @@ void keus_button_init(void)
   GPIO_SetMode(P3, BIT0, GPIO_MODE_INPUT);
   GPIO_EnableInt(P3, 0, GPIO_INT_RISING);
   //NVIC_EnableIRQ(GPIO234_IRQn);
+
+  //Zero Cross pin init
+  SYS->P3_MFP &= ~SYS_MFP_P36_Msk;
+  SYS->P3_MFP |= SYS_MFP_P36_GPIO;
+  GPIO_SetMode(P3, BIT6, GPIO_MODE_INPUT);
+  GPIO_EnableInt(P3, 6, GPIO_INT_FALLING);
 
   /* Enable interrupt de-bounce function and select de-bounce sampling cycle time */
   GPIO_SET_DEBOUNCE_TIME(GPIO_DBCTL_DBCLKSRC_HCLK, GPIO_DBCTL_DBCLKSEL_256); //ak: find actual debounce value

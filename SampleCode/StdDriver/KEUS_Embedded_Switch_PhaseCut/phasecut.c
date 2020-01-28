@@ -80,7 +80,7 @@ void setPhaseCut(uint8_t ledno, uint8_t state)
     // }
     // state = 255 - state;
     // arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 10000));
-    arr_led[ledno - 1].phaseCutTime = calculateCmpValue(state);
+    arr_led[ledno].phaseCutTime = calculateCmpValue(state);
     //updateAllTimings(); //fill allSwitchTiming and sort it
 }
 
@@ -160,7 +160,7 @@ void TMR1_IRQHandler(void)
         {
             LED3 = LED_LOW;
         }
-        if (arr_led[2].phaseCutTime)
+        if (arr_led[3].phaseCutTime)
         {
             LED4 = LED_LOW;
         }

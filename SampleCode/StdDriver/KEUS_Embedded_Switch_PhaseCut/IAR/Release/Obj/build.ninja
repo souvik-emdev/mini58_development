@@ -24,6 +24,7 @@ build system_Mini58Series.pbi : index system_Mini58Series.xcl
 build button.pbi : index button.xcl
 build keusActions.pbi : index keusActions.xcl
 build keusuart.pbi : index keusuart.xcl
+build phasecut.pbi : index phasecut.xcl
 build clk.pbi : index clk.xcl
 build gpio.pbi : index gpio.xcl
 build pwm.pbi : index pwm.xcl
@@ -32,10 +33,10 @@ build sys.pbi : index sys.xcl
 build timer.pbi : index timer.xcl
 build uart.pbi : index uart.xcl
 build main.pbi : index main.xcl
-build GPIO_LED_part0.pbi : link system_Mini58Series.pbi button.pbi keusActions.pbi
-build GPIO_LED_part1.pbi : link keusuart.pbi clk.pbi gpio.pbi
-build GPIO_LED_part2.pbi : link pwm.pbi retarget.pbi sys.pbi
-build GPIO_LED_part3.pbi : link timer.pbi uart.pbi main.pbi
+build GPIO_LED_part0.pbi : link system_Mini58Series.pbi button.pbi keusActions.pbi keusuart.pbi
+build GPIO_LED_part1.pbi : link phasecut.pbi clk.pbi gpio.pbi pwm.pbi
+build GPIO_LED_part2.pbi : link retarget.pbi sys.pbi timer.pbi uart.pbi
+build GPIO_LED_part3.pbi : link main.pbi
 build GPIO_LED.pbd : link GPIO_LED_part0.pbi GPIO_LED_part1.pbi GPIO_LED_part2.pbi GPIO_LED_part3.pbi
 build GPIO_LED.pbw : browsedata GPIO_LED.pbd
 

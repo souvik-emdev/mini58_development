@@ -101,7 +101,7 @@ void toggleLed(uint8_t ledno)
         else
         {
             arr_led[3].state = 0;
-            LED3 = LED_LOW;
+            LED4 = LED_LOW;
         }
         if (arr_led[3].phaseCutTime)
         {
@@ -117,7 +117,7 @@ void toggleLed(uint8_t ledno)
     }
 
     sendReply[datalen++] = ledno;
-    sendReply[datalen++] = arr_led[ledno - 1].state;
+    sendReply[datalen++] = arr_led[ledno].state;
     UART_tx(sendReply, datalen);
     retryGettingAck(sendReply, datalen);
 }

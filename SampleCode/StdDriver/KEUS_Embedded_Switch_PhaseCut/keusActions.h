@@ -23,16 +23,16 @@
 #define SM_ENABLE_FOR_LED4 0x8
 
 #define CONFIGNORMAL 1
-#define CONFIGDIM 2
-#define CONFIGFAN 3
+#define CONFIGDIM 3
+#define CONFIGFAN 4
 
-#define LEDID1 1
-#define LEDID2 2
-#define LEDID3 3
-#define LEDID4 4
+#define LEDID1 0
+#define LEDID2 1
+#define LEDID3 2
+#define LEDID4 3
 
-#define LED_HIGH 0
-#define LED_LOW 1
+#define LED_HIGH 1
+#define LED_LOW 0
 
 //UART
 #define TASK_CONFIG_SWITCH 1
