@@ -2387,6 +2387,9 @@
             <name>$PROJ_DIR$\..\button.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\EmbeddedSwitchConstants.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\keusActions.c</name>
         </file>
         <file>

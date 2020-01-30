@@ -15,21 +15,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "Mini58Series.h"
+#include "EmbeddedSwitchConstants.h"
 
 #define PLL_CLOCK 50000000
-
-//Event bit masks
-#define KEUS_BUTTON1 0x1
-#define KEUS_BUTTON2 0x2
-#define KEUS_BUTTON3 0x4
-#define KEUS_BUTTON4 0x8
-#define KEUS_UART 0x10
-#define KEUS_RETRY_ACK 0X20
-
-#define LEDID1 0
-#define LEDID2 1
-#define LEDID3 2
-#define LEDID4 3
 
 uint8_t tester = 0;
 

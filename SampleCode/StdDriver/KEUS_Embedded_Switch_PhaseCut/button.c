@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "Mini58Series.h"
 #include "button.h"
+#include "EmbeddedSwitchConstants.h"
 
 /**
  * @brief       Port2/Port3/Port4 IRQ
@@ -103,7 +104,7 @@ void keus_button_init(void)
     SYS->P3_MFP |= SYS_MFP_P36_GPIO;
     GPIO_SetMode(P3, BIT6, GPIO_MODE_INPUT);
     GPIO_EnableInt(P3, 6, GPIO_INT_FALLING);
-    
+
     /* Enable interrupt de-bounce function and select de-bounce sampling cycle time */
       GPIO_SET_DEBOUNCE_TIME(GPIO_DBCTL_DBCLKSRC_HCLK, GPIO_DBCTL_DBCLKSEL_256); //ak: find actual debounce value
       GPIO_ENABLE_DEBOUNCE(P3, BIT2);

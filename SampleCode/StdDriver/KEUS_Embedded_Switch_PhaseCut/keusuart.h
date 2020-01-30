@@ -4,11 +4,7 @@
 /* ^^ these are the include guards */
 
 /* Prototypes for the functions */
-
-#define KEUS_UART_MSG_INITIATOR 0x28
-#define KEUS_UART_MSG_TERMINATOR 0x29
-#define KEUS_UART_BUFFER 10
-#define KEUS_UART 0x10
+#include "EmbeddedSwitchConstants.h"
 
 extern volatile uint32_t keusAppEvents;;
 

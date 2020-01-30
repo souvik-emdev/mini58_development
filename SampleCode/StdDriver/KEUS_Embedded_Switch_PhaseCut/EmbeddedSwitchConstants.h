@@ -1,0 +1,71 @@
+#ifndef EMBEDDEDSWITCHCONSTANTS_H_INCLUDED
+#define EMBEDDEDSWITCHCONSTANTS_H_INCLUDED
+
+//Event bit masks
+#define KEUS_BUTTON1 0x1
+#define KEUS_BUTTON2 0x2
+#define KEUS_BUTTON3 0x4
+#define KEUS_BUTTON4 0x8
+#define KEUS_UART 0x10
+#define KEUS_RETRY_ACK 0X20
+
+#define LEDID1 0
+#define LEDID2 1
+#define LEDID3 2
+#define LEDID4 3
+
+#define LED1 P22
+#define LED2 P23
+#define LED3 P24
+#define LED4 P25
+
+//Smoothdim enabled bitmasks
+#define SM_ENABLE_FOR_LED1 0x1
+#define SM_ENABLE_FOR_LED2 0x2
+#define SM_ENABLE_FOR_LED3 0x4
+#define SM_ENABLE_FOR_LED4 0x8
+
+#define CONFIGNORMAL 1
+#define CONFIGDIM 3
+#define CONFIGFAN 4
+
+#define LED_HIGH 1
+#define LED_LOW 0
+
+//UART
+#define TASK_CONFIG_SWITCH 1
+//#define TASK_GET_SWITCH_STATE 2
+//#define TASK_GET_CONFIG 3
+#define TASK_EXECUTE_SWITCH_STATE 4
+#define TASK_UART_RETRY_ACK 5
+
+#define KEUS_UART_MSG_INITIATOR 0x28
+#define KEUS_UART_MSG_TERMINATOR 0x29
+#define KEUS_UART_BUFFER 10
+
+//UART Reply Ids
+#define TASK_UART_ACK 5 //for configSwitch and executeSwitchState
+//#define GETSWITCHSTATEREPLY 0x06
+//#define GETCONFIGREPLY 0x07
+#define REPORTSWITCHSTATE 0x01
+
+#define MAX_UART_DATA_BUFFER 10
+#define UARTRETRYBUFFER 6
+
+#define MAX_NUMBER_LED 4
+
+#define SM_LEVEL 58
+
+#define MIN_ALLOWED_DIMMING 1 //1% OF 255
+#define MAX_ALLOWED_DIMMING 244 //95% OF 255
+
+//#define MIN_ALLOWED_CMPVALUE 300
+//#define MAX_ALLOWED_CMPVALUE 14500
+
+#define PHASE_CUT_RESET 14800 //must be higher than MAX_ALLOWED_CMPVALUE
+
+//#define PC_ENABLE_FOR_LED(x) (1 << (x))
+#define SM_ENABLE_FOR_LED(x) (1 << (x))
+
+
+#endif
