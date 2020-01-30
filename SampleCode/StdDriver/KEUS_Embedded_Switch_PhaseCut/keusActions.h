@@ -22,6 +22,8 @@
 #define SM_ENABLE_FOR_LED3 0x4
 #define SM_ENABLE_FOR_LED4 0x8
 
+#define KEUS_RETRY_ACK 0X20
+
 #define CONFIGNORMAL 1
 #define CONFIGDIM 3
 #define CONFIGFAN 4
@@ -65,7 +67,6 @@ extern void setPhaseCut(uint8_t ledno, uint8_t state);
 extern void updateAllTimings(void);
 extern volatile uint8_t phaseCutEnable;
 extern volatile uint8_t smoothDimActive;
-extern volatile uint8_t ignoreZC;
 
 void parseUart(void);
 void taskHandler(void);
@@ -90,6 +91,7 @@ struct led
 
 struct led arr_led[MAX_NUMBER_LED];
 
-void toggleLed(uint8_t);
+void toggleLed(uint8_t ledno);
+void sendSwitchPressInfoAgain(void);
 
 #endif

@@ -24,6 +24,7 @@
 #define KEUS_BUTTON3 0x4
 #define KEUS_BUTTON4 0x8
 #define KEUS_UART 0x10
+#define KEUS_RETRY_ACK 0X20
 
 #define LEDID1 0
 #define LEDID2 1
@@ -33,22 +34,23 @@
 uint8_t tester = 0;
 
 //Called on button press event
-extern void toggleLed(uint8_t);
+extern void toggleLed(uint8_t ledno);
 //Called on every UART event
 extern void parseUart(void);
 extern void keus_uart_init(void);
 extern void keus_button_init(void);
 extern void keus_config_switch_init(void);
 extern void phaseCutInit(void);
+extern void sendSwitchPressInfoAgain(void);
 
 volatile uint32_t keusAppEvents;
 
 void keusZeroCrossInit(void)
 {
   TIMER0->CTL = TIMER_PERIODIC_MODE | 7;
-  //Set timer 0 @4ms used for ZC debounce and retry ack @800ms
-  //Calculation: (12000/8)*4
-  TIMER0->CMP = 0xEA60;
+  //Set timer 0, used for retry ack @800ms
+  //Calculation: (12000/8)*required time in ms
+  TIMER0->CMP = 0x124F80;
   //TIMER0->CMP = 0x3A98;
   // TIMER_SET_PRESCALE_VALUE(TIMER0, 0x07);
   // TIMER_SET_CMP_VALUE(TIMER0, 0x3A98);
@@ -63,13 +65,13 @@ void keusZeroCrossInit(void)
 void KEUS_init(void)
 {
   //Setup tx and rx pins, baud rate
-  //keus_uart_init();
+  keus_uart_init();
   //Setup all four input pins and interrupt, debounce
   keus_button_init();
   //Setup output pins and default switch types
   keus_config_switch_init();
   //Setup timer1
-  //phaseCutInit();
+  phaseCutInit();
   //Setup timer0 to simulate zero-cross detector
   keusZeroCrossInit();
 
@@ -82,32 +84,38 @@ void KEUS_init(void)
     else
       continue;
 
-    // if (keusAppEvents & KEUS_BUTTON1)
-    // {
-    //   toggleLed(LEDID1);
-    //   keusAppEvents ^= KEUS_BUTTON1;
-    // }
-    // else if (keusAppEvents & KEUS_BUTTON2)
-    // {
-    //   toggleLed(LEDID2);
-    //   keusAppEvents ^= KEUS_BUTTON2;
-    // }
-    // else if (keusAppEvents & KEUS_BUTTON3)
-    // {
-    //   toggleLed(LEDID3);
-    //   keusAppEvents ^= KEUS_BUTTON3;
-    // }
-    // else if (keusAppEvents & KEUS_BUTTON4)
-    // {
-    //   toggleLed(LEDID4);
-    //   keusAppEvents ^= KEUS_BUTTON4;
-    // }
+    if (keusAppEvents & KEUS_BUTTON1)
+    {
+      toggleLed(LEDID1);
+      keusAppEvents ^= KEUS_BUTTON1;
+    }
+    else if (keusAppEvents & KEUS_BUTTON2)
+    {
+      toggleLed(LEDID2);
+      keusAppEvents ^= KEUS_BUTTON2;
+    }
+    else if (keusAppEvents & KEUS_BUTTON3)
+    {
+      toggleLed(LEDID3);
+      keusAppEvents ^= KEUS_BUTTON3;
+    }
+    else if (keusAppEvents & KEUS_BUTTON4)
+    {
+      toggleLed(LEDID4);
+      keusAppEvents ^= KEUS_BUTTON4;
+    }
 
-    // else if (keusAppEvents & KEUS_UART)
-    // {
-    //   parseUart();
-    //   keusAppEvents ^= KEUS_UART;
-    // }
+    else if (keusAppEvents & KEUS_UART)
+    {
+      parseUart();
+      keusAppEvents ^= KEUS_UART;
+    }
+
+    else if (keusAppEvents & KEUS_RETRY_ACK)
+    {
+      sendSwitchPressInfoAgain();
+      keusAppEvents ^= KEUS_RETRY_ACK;
+    }
   }
 }
 

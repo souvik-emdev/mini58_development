@@ -472,11 +472,18 @@ void retryGettingAck(uint8_t arr[], uint8_t dataLen)
     // TIMER_EnableInt(TIMER0);
     // NVIC_EnableIRQ(TMR0_IRQn);
 
-    // // Start Timer 0
-    // TIMER_Start(TIMER0);
+//Calculation: (12000/8)*required time in ms
+  TIMER0->CMP = 0x124F80;
+    // Start Timer 0
+    TIMER_Start(TIMER0);
 }
 
 //Sends the switch press info message via uart
+void sendSwitchPressInfoAgain()
+{
+    UART_tx(retryBuffer, retryDataLen);
+}
+
 void TMR0_IRQHandler(void)
 {
     // UART_tx(retryBuffer, retryDataLen);
@@ -498,18 +505,11 @@ void TMR0_IRQHandler(void)
     //Tx info every 800ms
     if (retryGettingAckEnabled)
     {
-        retryTimerCount++;
-        if (retryTimerCount >= 200)
-        {
-            retryTimerCount = 0;
-            UART_tx(retryBuffer, retryDataLen);
-        }
+            //UART_tx(retryBuffer, retryDataLen);
+            keusAppEvents |= KEUS_RETRY_ACK;
+        
     }
-    //Enable ZC read after 4ms
-    if (ignoreZC)
-    {
-        ignoreZC = 0;
-    }
+    else TIMER_Stop(TIMER0);
 }
 
 //copies the uart received data into seperate buffer and call taskHandler to perform task
@@ -559,30 +559,30 @@ void taskHandler(void)
 //At start up configures all switches as normal off/on type
 void keus_config_switch_init(void)
 {
-    // arr_led[0].config = CONFIGNORMAL;
-    // arr_led[1].config = CONFIGNORMAL;
-    // arr_led[2].config = CONFIGNORMAL;
-    // arr_led[3].config = CONFIGNORMAL;
+    arr_led[0].config = CONFIGNORMAL;
+    arr_led[1].config = CONFIGNORMAL;
+    arr_led[2].config = CONFIGNORMAL;
+    arr_led[3].config = CONFIGNORMAL;
 
-    // SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
-    // SYS->P2_MFP |= SYS_MFP_P22_GPIO;
-    // GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
-    // P22 = LED_LOW;
+    SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
+    SYS->P2_MFP |= SYS_MFP_P22_GPIO;
+    GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
+    P22 = LED_LOW;
 
-    // SYS->P2_MFP &= ~SYS_MFP_P23_Msk;
-    // SYS->P2_MFP |= SYS_MFP_P23_GPIO;
-    // GPIO_SetMode(P2, BIT3, GPIO_MODE_OUTPUT);
-    // P23 = LED_LOW;
+    SYS->P2_MFP &= ~SYS_MFP_P23_Msk;
+    SYS->P2_MFP |= SYS_MFP_P23_GPIO;
+    GPIO_SetMode(P2, BIT3, GPIO_MODE_OUTPUT);
+    P23 = LED_LOW;
 
-    // SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
-    // SYS->P2_MFP |= SYS_MFP_P24_GPIO;
-    // GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
-    // P24 = LED_LOW;
+    SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
+    SYS->P2_MFP |= SYS_MFP_P24_GPIO;
+    GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
+    P24 = LED_LOW;
 
-    // SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
-    // SYS->P2_MFP |= SYS_MFP_P25_GPIO;
-    // GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
-    // P25 = LED_LOW;
+    SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
+    SYS->P2_MFP |= SYS_MFP_P25_GPIO;
+    GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
+    P25 = LED_LOW;
 
     //Debug Zero-cross detector
     SYS->P2_MFP &= ~SYS_MFP_P26_Msk;
