@@ -70,14 +70,19 @@ void updateAllTimings(void)
 
 void setPhaseCut(uint8_t ledno, uint8_t state)
 {
-    // if (state < MIN_ALLOWED_DIMMING)
-    // {
-    //     state = MIN_ALLOWED_DIMMING;
-    // }
-    // else if (state > MAX_ALLOWED_DIMMING)
-    // {
-    //     state = MAX_ALLOWED_DIMMING;
-    // }
+    if (state < MIN_ALLOWED_DIMMING)
+    {
+        state = MIN_ALLOWED_DIMMING;
+    }
+    else if (state > MAX_ALLOWED_DIMMING)
+    {
+        state = MAX_ALLOWED_DIMMING;
+    }
+
+    if (!arr_led[ledno].smoothDimTime && !arr_led[ledno].state)
+    {
+        arr_led[ledno].smoothDimTime = calculateCmpValue(MIN_ALLOWED_DIMMING);
+    }
     // state = 255 - state;
     // arr_led[ledno - 1].phaseCutTime = calculateCmpValue(map(state, 0, 255, 0, 10000));
     arr_led[ledno].phaseCutTime = calculateCmpValue(state);
@@ -191,6 +196,9 @@ void TMR1_IRQHandler(void)
         setLed(allSwitchTiming[SwitchTimingIndex]);
 }
 
+/*ak*/
+uint8_t keus_ports[4] = {2, 2, 2, 2};
+uint8_t keus_bits[4] = {2, 3, 4, 5};
 
 void smoothDimHandler(void)
 {
@@ -212,6 +220,19 @@ void smoothDimHandler(void)
             {
                 //uint8_t temp =  SM_ENABLE_FOR_LED(i);
                 smoothDimActive &= ~SM_ENABLE_FOR_LED(i);
+                //Action for on and off
+                if (arr_led[i].state == 0)
+                {
+                    arr_led[i].phaseCutTime = 0;
+                    arr_led[i].smoothDimTime = 0;
+                    GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_LOW;
+                }
+                else if (arr_led[i].state == 255)
+                {
+                    arr_led[i].phaseCutTime = 0;
+                    arr_led[i].smoothDimTime = 0;
+                    GPIO_PIN_ADDR(keus_ports[i], keus_bits[i]) = LED_HIGH;
+                }
                 
             }
              found = 1;
@@ -224,9 +245,6 @@ void smoothDimHandler(void)
 
 }
 
-/*ak*/
-uint8_t keus_ports[4] = {2, 2, 2, 2};
-uint8_t keus_bits[4] = {2, 3, 4, 5};
 
 void setLed(uint16_t timingValue)
 {

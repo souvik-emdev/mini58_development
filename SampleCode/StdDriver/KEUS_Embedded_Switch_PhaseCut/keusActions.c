@@ -6,6 +6,115 @@
 #include "Mini58Series.h"
 #include "keusActions.h"
 
+void setSwitch(uint8_t ledno, uint8_t state)
+{
+    switch (ledno)
+    {
+    case LEDID1:
+
+        if (arr_led[0].config == CONFIGNORMAL)
+        {
+            if (state > 0)
+            {
+                arr_led[0].state = 255;
+                LED1 = LED_HIGH;
+            }
+            else
+            {
+                arr_led[0].state = 0;
+                LED1 = LED_LOW;
+            }
+        }
+        else //for config other than normal: dim & fan
+        {
+            //Clear phasecut enable bit
+            //smoothDimActive &= ~SM_ENABLE_FOR_LED1;
+            smoothDimActive |= SM_ENABLE_FOR_LED1;
+            setPhaseCut(LEDID1, state);
+            arr_led[0].state = state;
+        }
+
+        break;
+
+    case LEDID2:
+        if (arr_led[1].config == CONFIGNORMAL)
+        {
+            if (state > 0)
+            {
+                arr_led[1].state = 255;
+                LED2 = LED_HIGH;
+            }
+            else
+            {
+                arr_led[1].state = 0;
+                LED2 = LED_LOW;
+            }
+        }
+        else
+        {
+            //phaseCutEnable |= (1 << (LEDID2 - 1));
+            smoothDimActive |= SM_ENABLE_FOR_LED2;
+            setPhaseCut(LEDID2, state);
+
+            arr_led[1].state = state;
+            //setPwmDuty(LEDID2, arr_led[1].state);
+        }
+
+        break;
+    case LEDID3:
+        if (arr_led[2].config == CONFIGNORMAL)
+        {
+            if (state > 0)
+            {
+                arr_led[2].state = 255;
+                LED3 = LED_HIGH;
+            }
+            else
+            {
+                arr_led[2].state = 0;
+                LED3 = LED_LOW;
+            }
+        }
+        else
+        {
+
+            //phaseCutEnable |= (1 << (LEDID2 - 1));
+            smoothDimActive |= SM_ENABLE_FOR_LED3;
+            setPhaseCut(LEDID3, state);
+
+            arr_led[2].state = state;
+            //setPwmDuty(LEDID3, arr_led[2].state);
+        }
+
+        break;
+    case LEDID4:
+        if (arr_led[3].config == 1)
+        {
+            if (state > 0)
+            {
+                arr_led[3].state = 255;
+                LED4 = LED_HIGH;
+            }
+            else
+            {
+                arr_led[3].state = 0;
+                LED4 = LED_LOW;
+            }
+        }
+        else
+        {
+            //phaseCutEnable |= (1 << (LEDID2 - 1));
+            smoothDimActive |= SM_ENABLE_FOR_LED4;
+            setPhaseCut(LEDID4, state);
+            arr_led[3].state = state;
+            //setPwmDuty(LEDID4, arr_led[3].state);
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 /**
  * @brief       Toggle output state on buttonpress
  *
@@ -18,103 +127,110 @@
  */
 void toggleLed(uint8_t ledno)
 {
-    uint8_t sendReply[5], datalen = 0;
+    uint8_t sendReply[5], datalen = 0, state;
     sendReply[datalen++] = REPORTSWITCHSTATE;
     updateTxnId();
     sendReply[datalen++] = txnId;
 
-    switch (ledno)
-    {
-    case LEDID1:
+    if (arr_led[ledno].state)
+        state = 0;
+    else
+        state = 255;
 
-        if (arr_led[0].state < 1)
-        {
-            arr_led[0].state = 255;
+    setSwitch(ledno, state);
 
-            LED1 = LED_HIGH;
-        }
-        else
-        {
-            arr_led[0].state = 0;
-            LED1 = LED_LOW;
-        }
-        if (arr_led[0].phaseCutTime)
-        {
-            //clear phasecut enable bit
-            smoothDimActive &= ~SM_ENABLE_FOR_LED1;
-            arr_led[0].phaseCutTime = 0;
-            //Update timing array and sort it
-            updateAllTimings();
-        }
+    // switch (ledno)
+    // {
+    // case LEDID1:
 
-        break;
-    case LEDID2:
+    //     if (arr_led[0].state < 1)
+    //     {
+    //         arr_led[0].state = 255;
 
-        if (arr_led[1].state < 1)
-        {
-            arr_led[1].state = 255;
+    //         LED1 = LED_HIGH;
+    //     }
+    //     else
+    //     {
+    //         arr_led[0].state = 0;
+    //         LED1 = LED_LOW;
+    //     }
+    //     if (arr_led[0].phaseCutTime)
+    //     {
+    //         //clear phasecut enable bit
+    //         smoothDimActive &= ~SM_ENABLE_FOR_LED1;
+    //         arr_led[0].phaseCutTime = 0;
+    //         //Update timing array and sort it
+    //         updateAllTimings();
+    //     }
 
-            LED2 = LED_HIGH;
-        }
-        else
-        {
-            arr_led[1].state = 0;
-            LED2 = LED_LOW;
-        }
-        if (arr_led[1].phaseCutTime)
-        {
-            smoothDimActive &= ~SM_ENABLE_FOR_LED2;
-            arr_led[1].phaseCutTime = 0;
-            updateAllTimings();
-        }
+    //     break;
+    // case LEDID2:
 
-        break;
-    case LEDID3:
+    //     if (arr_led[1].state < 1)
+    //     {
+    //         arr_led[1].state = 255;
 
-        if (arr_led[2].state < 1)
-        {
-            arr_led[2].state = 255;
+    //         LED2 = LED_HIGH;
+    //     }
+    //     else
+    //     {
+    //         arr_led[1].state = 0;
+    //         LED2 = LED_LOW;
+    //     }
+    //     if (arr_led[1].phaseCutTime)
+    //     {
+    //         smoothDimActive &= ~SM_ENABLE_FOR_LED2;
+    //         arr_led[1].phaseCutTime = 0;
+    //         updateAllTimings();
+    //     }
 
-            LED3 = LED_HIGH;
-        }
-        else
-        {
-            arr_led[2].state = 0;
-            LED3 = LED_LOW;
-        }
-        if (arr_led[2].phaseCutTime)
-        {
-            smoothDimActive &= ~SM_ENABLE_FOR_LED3;
-            arr_led[2].phaseCutTime = 0;
-            updateAllTimings();
-        }
+    //     break;
+    // case LEDID3:
 
-        break;
-    case LEDID4:
+    //     if (arr_led[2].state < 1)
+    //     {
+    //         arr_led[2].state = 255;
 
-        if (arr_led[3].state < 1)
-        {
-            arr_led[3].state = 255;
+    //         LED3 = LED_HIGH;
+    //     }
+    //     else
+    //     {
+    //         arr_led[2].state = 0;
+    //         LED3 = LED_LOW;
+    //     }
+    //     if (arr_led[2].phaseCutTime)
+    //     {
+    //         smoothDimActive &= ~SM_ENABLE_FOR_LED3;
+    //         arr_led[2].phaseCutTime = 0;
+    //         updateAllTimings();
+    //     }
 
-            LED4 = LED_HIGH;
-        }
-        else
-        {
-            arr_led[3].state = 0;
-            LED4 = LED_LOW;
-        }
-        if (arr_led[3].phaseCutTime)
-        {
-            smoothDimActive &= ~SM_ENABLE_FOR_LED4;
-            arr_led[3].phaseCutTime = 0;
-            updateAllTimings();
-        }
+    //     break;
+    // case LEDID4:
 
-        break;
+    //     if (arr_led[3].state < 1)
+    //     {
+    //         arr_led[3].state = 255;
 
-    default:
-        break;
-    }
+    //         LED4 = LED_HIGH;
+    //     }
+    //     else
+    //     {
+    //         arr_led[3].state = 0;
+    //         LED4 = LED_LOW;
+    //     }
+    //     if (arr_led[3].phaseCutTime)
+    //     {
+    //         smoothDimActive &= ~SM_ENABLE_FOR_LED4;
+    //         arr_led[3].phaseCutTime = 0;
+    //         updateAllTimings();
+    //     }
+
+    //     break;
+
+    // default:
+    //     break;
+    // }
 
     sendReply[datalen++] = ledno;
     sendReply[datalen++] = arr_led[ledno].state;
@@ -142,183 +258,185 @@ void executeSwitchState(void)
         switchId = uartDataBuffer[position + 1];
         state = uartDataBuffer[position + 2];
 
-        switch (switchId)
-        {
-        case LEDID1:
-            //Clear phasecut enable bit
-            smoothDimActive &= ~SM_ENABLE_FOR_LED1;
-            if (arr_led[0].config == CONFIGNORMAL)
-            {
-                if (state > 0)
-                {
-                    arr_led[0].state = 255;
-                    LED1 = LED_HIGH;
-                }
-                else
-                {
-                    arr_led[0].state = 0;
-                    LED1 = LED_LOW;
-                }
-            }
-            else //for config other than normal: dim & fan
-            {
+        setSwitch(switchId, state);
 
-                if (state == 0 || state == 255)
-                {
-                    arr_led[0].phaseCutTime = 0;
-                    //Update timing array and sort it
-                    updateAllTimings();
-                    if (state == 0)
-                    {
-                        LED1 = LED_LOW;
-                    }
-                    else if (state == 255)
-                    {
-                        LED1 = LED_HIGH;
-                    }
-                }
-                else
-                {
-                    //phaseCutEnable |= (1 << (LEDID1 - 1));
-                    //Set phasecut bit mask
-                    smoothDimActive |= SM_ENABLE_FOR_LED1;
-                    setPhaseCut(LEDID1, state);
-                }
-                arr_led[0].state = state;
+        // switch (switchId)
+        // {
+        // case LEDID1:
+        //     //Clear phasecut enable bit
+        //     smoothDimActive &= ~SM_ENABLE_FOR_LED1;
+        //     if (arr_led[0].config == CONFIGNORMAL)
+        //     {
+        //         if (state > 0)
+        //         {
+        //             arr_led[0].state = 255;
+        //             LED1 = LED_HIGH;
+        //         }
+        //         else
+        //         {
+        //             arr_led[0].state = 0;
+        //             LED1 = LED_LOW;
+        //         }
+        //     }
+        //     else //for config other than normal: dim & fan
+        //     {
 
-                //setPwmDuty(LEDID1, arr_led[0].state);
-            }
+        //         // if (state == 0 || state == 255)
+        //         // {
+        //         //     arr_led[0].phaseCutTime = 0;
+        //         //     //Update timing array and sort it
+        //         //     updateAllTimings();
+        //         //     if (state == 0)
+        //         //     {
+        //         //         LED1 = LED_LOW;
+        //         //     }
+        //         //     else if (state == 255)
+        //         //     {
+        //         //         LED1 = LED_HIGH;
+        //         //     }
+        //         // }
+        //         // else
+        //         // {
+        //         //phaseCutEnable |= (1 << (LEDID1 - 1));
+        //         //Set phasecut bit mask
+        //         smoothDimActive |= SM_ENABLE_FOR_LED1;
+        //         setPhaseCut(LEDID1, state);
+        //         // }
+        //         arr_led[0].state = state;
 
-            break;
-        case LEDID2:
-            smoothDimActive &= ~SM_ENABLE_FOR_LED2;
-            if (arr_led[1].config == CONFIGNORMAL)
-            {
-                if (state > 0)
-                {
-                    arr_led[1].state = 255;
-                    LED2 = LED_HIGH;
-                }
-                else
-                {
-                    arr_led[1].state = 0;
-                    LED2 = LED_LOW;
-                }
-            }
-            else
-            {
-                if (state == 0 || state == 255)
-                {
-                    arr_led[1].phaseCutTime = 0;
-                    //Update timing array and sort it
-                    updateAllTimings();
+        //         //setPwmDuty(LEDID1, arr_led[0].state);
+        //     }
 
-                    if (state == 0)
-                    {
-                        LED2 = LED_LOW;
-                    }
-                    else if (state == 255)
-                    {
-                        LED2 = LED_HIGH;
-                    }
-                }
-                else
-                {
-                    //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    smoothDimActive |= SM_ENABLE_FOR_LED2;
-                    setPhaseCut(LEDID2, state);
-                }
-                arr_led[1].state = state;
-                //setPwmDuty(LEDID2, arr_led[1].state);
-            }
+        //     break;
+        // case LEDID2:
+        //     smoothDimActive &= ~SM_ENABLE_FOR_LED2;
+        //     if (arr_led[1].config == CONFIGNORMAL)
+        //     {
+        //         if (state > 0)
+        //         {
+        //             arr_led[1].state = 255;
+        //             LED2 = LED_HIGH;
+        //         }
+        //         else
+        //         {
+        //             arr_led[1].state = 0;
+        //             LED2 = LED_LOW;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if (state == 0 || state == 255)
+        //         {
+        //             arr_led[1].phaseCutTime = 0;
+        //             //Update timing array and sort it
+        //             updateAllTimings();
 
-            break;
-        case LEDID3:
-            smoothDimActive &= ~SM_ENABLE_FOR_LED3;
-            if (arr_led[2].config == CONFIGNORMAL)
-            {
-                if (state > 0)
-                {
-                    arr_led[2].state = 255;
-                    LED3 = LED_HIGH;
-                }
-                else
-                {
-                    arr_led[2].state = 0;
-                    LED3 = LED_LOW;
-                }
-            }
-            else
-            {
-                if (state == 0 || state == 255)
-                {
-                    arr_led[2].phaseCutTime = 0;
-                    //Update timing array and sort it
-                    updateAllTimings();
-                    if (state == 0)
-                    {
-                        LED3 = LED_LOW;
-                    }
-                    else if (state == 255)
-                    {
-                        LED3 = LED_HIGH;
-                    }
-                }
-                else
-                {
-                    //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    smoothDimActive |= SM_ENABLE_FOR_LED3;
-                    setPhaseCut(LEDID3, state);
-                }
-                arr_led[2].state = state;
-                //setPwmDuty(LEDID3, arr_led[2].state);
-            }
+        //             if (state == 0)
+        //             {
+        //                 LED2 = LED_LOW;
+        //             }
+        //             else if (state == 255)
+        //             {
+        //                 LED2 = LED_HIGH;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             //phaseCutEnable |= (1 << (LEDID2 - 1));
+        //             smoothDimActive |= SM_ENABLE_FOR_LED2;
+        //             setPhaseCut(LEDID2, state);
+        //         }
+        //         arr_led[1].state = state;
+        //         //setPwmDuty(LEDID2, arr_led[1].state);
+        //     }
 
-            break;
-        case LEDID4:
-            smoothDimActive &= ~SM_ENABLE_FOR_LED4;
-            if (arr_led[3].config == 1)
-            {
-                if (state > 0)
-                {
-                    arr_led[3].state = 255;
-                    LED4 = LED_HIGH;
-                }
-                else
-                {
-                    arr_led[3].state = 0;
-                    LED4 = LED_LOW;
-                }
-            }
-            else
-            {
-                if (state == 0 || state == 255)
-                {
-                    arr_led[3].phaseCutTime = 0;
-                    //Update timing array and sort it
-                    updateAllTimings();
-                    if (state == 0)
-                    {
-                        LED4 = LED_LOW;
-                    }
-                    else if (state == 255)
-                    {
-                        LED4 = LED_HIGH;
-                    }
-                }
-                else
-                {
-                    //phaseCutEnable |= (1 << (LEDID2 - 1));
-                    smoothDimActive |= SM_ENABLE_FOR_LED4;
-                    setPhaseCut(LEDID4, state);
-                }
-                arr_led[3].state = state;
-                //setPwmDuty(LEDID4, arr_led[3].state);
-            }
-            break;
-        default:
-            break;
-        }
+        //     break;
+        // case LEDID3:
+        //     smoothDimActive &= ~SM_ENABLE_FOR_LED3;
+        //     if (arr_led[2].config == CONFIGNORMAL)
+        //     {
+        //         if (state > 0)
+        //         {
+        //             arr_led[2].state = 255;
+        //             LED3 = LED_HIGH;
+        //         }
+        //         else
+        //         {
+        //             arr_led[2].state = 0;
+        //             LED3 = LED_LOW;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if (state == 0 || state == 255)
+        //         {
+        //             arr_led[2].phaseCutTime = 0;
+        //             //Update timing array and sort it
+        //             updateAllTimings();
+        //             if (state == 0)
+        //             {
+        //                 LED3 = LED_LOW;
+        //             }
+        //             else if (state == 255)
+        //             {
+        //                 LED3 = LED_HIGH;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             //phaseCutEnable |= (1 << (LEDID2 - 1));
+        //             smoothDimActive |= SM_ENABLE_FOR_LED3;
+        //             setPhaseCut(LEDID3, state);
+        //         }
+        //         arr_led[2].state = state;
+        //         //setPwmDuty(LEDID3, arr_led[2].state);
+        //     }
+
+        //     break;
+        // case LEDID4:
+        //     smoothDimActive &= ~SM_ENABLE_FOR_LED4;
+        //     if (arr_led[3].config == 1)
+        //     {
+        //         if (state > 0)
+        //         {
+        //             arr_led[3].state = 255;
+        //             LED4 = LED_HIGH;
+        //         }
+        //         else
+        //         {
+        //             arr_led[3].state = 0;
+        //             LED4 = LED_LOW;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if (state == 0 || state == 255)
+        //         {
+        //             arr_led[3].phaseCutTime = 0;
+        //             //Update timing array and sort it
+        //             updateAllTimings();
+        //             if (state == 0)
+        //             {
+        //                 LED4 = LED_LOW;
+        //             }
+        //             else if (state == 255)
+        //             {
+        //                 LED4 = LED_HIGH;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             //phaseCutEnable |= (1 << (LEDID2 - 1));
+        //             smoothDimActive |= SM_ENABLE_FOR_LED4;
+        //             setPhaseCut(LEDID4, state);
+        //         }
+        //         arr_led[3].state = state;
+        //         //setPwmDuty(LEDID4, arr_led[3].state);
+        //     }
+        //     break;
+        // default:
+        //     break;
+        // }
 
         position += 2;
     }
@@ -375,17 +493,22 @@ void TMR0_IRQHandler(void)
     // clear timer interrupt flag
     TIMER_ClearIntFlag(TIMER0);
     //reset timer 1
-    TIMER1->CTL |= TIMER_CTL_RSTCNT_Msk;
-    TIMER1->CTL |= TIMER_CTL_CNTEN_Msk;
+    // TIMER1->CTL |= TIMER_CTL_RSTCNT_Msk;
+    // TIMER1->CTL |= TIMER_CTL_CNTEN_Msk;
     //Tx info every 800ms
     if (retryGettingAckEnabled)
     {
         retryTimerCount++;
-        if (retryTimerCount >= 80)
+        if (retryTimerCount >= 200)
         {
             retryTimerCount = 0;
             UART_tx(retryBuffer, retryDataLen);
         }
+    }
+    //Enable ZC read after 4ms
+    if (ignoreZC)
+    {
+        ignoreZC = 0;
     }
 }
 
@@ -436,30 +559,36 @@ void taskHandler(void)
 //At start up configures all switches as normal off/on type
 void keus_config_switch_init(void)
 {
-    arr_led[0].config = CONFIGNORMAL;
-    arr_led[1].config = CONFIGNORMAL;
-    arr_led[2].config = CONFIGNORMAL;
-    arr_led[3].config = CONFIGNORMAL;
+    // arr_led[0].config = CONFIGNORMAL;
+    // arr_led[1].config = CONFIGNORMAL;
+    // arr_led[2].config = CONFIGNORMAL;
+    // arr_led[3].config = CONFIGNORMAL;
 
-    SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
-    SYS->P2_MFP |= SYS_MFP_P22_GPIO;
-    GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
-    P22 = LED_LOW;
+    // SYS->P2_MFP &= ~SYS_MFP_P22_Msk;
+    // SYS->P2_MFP |= SYS_MFP_P22_GPIO;
+    // GPIO_SetMode(P2, BIT2, GPIO_MODE_OUTPUT);
+    // P22 = LED_LOW;
 
-    SYS->P2_MFP &= ~SYS_MFP_P23_Msk;
-    SYS->P2_MFP |= SYS_MFP_P23_GPIO;
-    GPIO_SetMode(P2, BIT3, GPIO_MODE_OUTPUT);
-    P23 = LED_LOW;
+    // SYS->P2_MFP &= ~SYS_MFP_P23_Msk;
+    // SYS->P2_MFP |= SYS_MFP_P23_GPIO;
+    // GPIO_SetMode(P2, BIT3, GPIO_MODE_OUTPUT);
+    // P23 = LED_LOW;
 
-    SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
-    SYS->P2_MFP |= SYS_MFP_P24_GPIO;
-    GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
-    P24 = LED_LOW;
+    // SYS->P2_MFP &= ~SYS_MFP_P24_Msk;
+    // SYS->P2_MFP |= SYS_MFP_P24_GPIO;
+    // GPIO_SetMode(P2, BIT4, GPIO_MODE_OUTPUT);
+    // P24 = LED_LOW;
 
-    SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
-    SYS->P2_MFP |= SYS_MFP_P25_GPIO;
-    GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
-    P25 = LED_LOW;
+    // SYS->P2_MFP &= ~SYS_MFP_P25_Msk;
+    // SYS->P2_MFP |= SYS_MFP_P25_GPIO;
+    // GPIO_SetMode(P2, BIT5, GPIO_MODE_OUTPUT);
+    // P25 = LED_LOW;
+
+    //Debug Zero-cross detector
+    SYS->P2_MFP &= ~SYS_MFP_P26_Msk;
+    SYS->P2_MFP |= SYS_MFP_P26_GPIO;
+    GPIO_SetMode(P2, BIT6, GPIO_MODE_OUTPUT);
+    P26 = LED_LOW;
 }
 
 //Sets output state as on-off/dimming/fan

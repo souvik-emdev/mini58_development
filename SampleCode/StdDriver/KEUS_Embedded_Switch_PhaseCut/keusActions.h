@@ -65,6 +65,7 @@ extern void setPhaseCut(uint8_t ledno, uint8_t state);
 extern void updateAllTimings(void);
 extern volatile uint8_t phaseCutEnable;
 extern volatile uint8_t smoothDimActive;
+extern volatile uint8_t ignoreZC;
 
 void parseUart(void);
 void taskHandler(void);
@@ -77,6 +78,7 @@ void uartAck(void);
 void executeSwitchState(void);
 void updateTxnId(void);
 void keus_config_switch_init(void);
+void setSwitch (uint8_t ledno, uint8_t state);
 
 struct led
 {

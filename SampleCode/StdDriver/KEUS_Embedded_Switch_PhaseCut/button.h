@@ -9,6 +9,7 @@
 #define KEUS_BUTTON3 0x4
 #define KEUS_BUTTON4 0x8
 #define KEUS_UART 0x10
+volatile uint8_t ignoreZC = 0;
 
 extern volatile uint32_t keusAppEvents;
 
