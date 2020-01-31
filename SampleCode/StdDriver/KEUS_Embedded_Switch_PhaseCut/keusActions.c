@@ -560,7 +560,7 @@ void taskHandler(void)
 //At start up configures all switches as normal off/on type
 void keus_config_switch_init(void)
 {
-    arr_led[0].config = CONFIGNORMAL;
+    arr_led[0].config = CONFIGDIM;
     arr_led[1].config = CONFIGNORMAL;
     arr_led[2].config = CONFIGNORMAL;
     arr_led[3].config = CONFIGNORMAL;
